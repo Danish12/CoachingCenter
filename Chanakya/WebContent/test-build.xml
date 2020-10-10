@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CA" default="deploy" basedir=".">
+
+	<description> Compile, Package and Deploy ${project-name}</description>
+	<!-- set global properties for this build -->
+	<property name="project-name" value="testCA" />
+	<property name="src" location="../src" />
+	<property name="classes" location="./build/classes" />
+	<property name="deployDest" location="/opt/tomcat7/webapps" />
+
+	<path id="project-classpath">
+		<!-- Libraries inside project lib folder like, Spring, Logging, Hibernate -->
+		<fileset dir="./WEB-INF/lib" includes="*.jar" />
+		<!-- Libraries inside server lib folder like, Servlet, JSP -->
+	</path>
+
+	<target name="clean">
+		<delete dir="./build/classes">
+		</delete>
+		<echo> Cleaned old class files !</echo>
+		<delete>
+			<fileset dir="./build">
+				<include name="*.war" />
+			</fileset>
+		</delete>
+		<mkdir dir="./build/classes" />
+		<echo> Cleaned old war file in build folder !</echo>
+	</target>
+
+	<target name="cleanDeploy">
+		<delete>
+			<fileset dir="${deployDest}">
+				<include name="*testCA.war" />
+				<exclude name="*/*.*" />
+			</fileset>
+		</delete>
+		<echo> Removed war files inside Server!</echo>
+		<delete dir="${deployDest}/${project-name}">
+		</delete>
+		<echo> Removed Previous Deployment inside Server!</echo>
+	</target>
+
+	<target name="compile" depends="clean" description="compile the source ">
+		<mkdir dir="./build/classes" />
+		<javac includeantruntime="false" srcdir="${src}" destdir="${classes}" classpathref="project-classpath" />
+
+		<copy  todir="${classes}" includeemptydirs="true" >
+			<fileset dir="${src}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+
+		<echo>${classes} ==>Classes Path</echo>
+		<echo> Java file compiled and copied to classes folder !</echo>
+	</target>
+
+	<target name="buildwar" description="Building War File"  depends="clean,compile">
+		<war destfile="./build/${project-name}.war" webxml="WEB-INF/web.xml">
+			<fileset dir=".">
+				<include name="**/*.jsp" />
+				<include name="*/*.xml" />
+				<include name="**/*.jar" />
+				<include name="**/*.js" />
+				<include name="**/*.csc" />
+				<include name="**/*.*" />
+			</fileset>
+			<lib dir="WEB-INF/lib">
+			</lib>
+			<classes dir="./build/classes" />
+		</war>
+	</target>
+	<target name="deploy" depends="buildwar,cleanDeploy">
+		<echo>Copying the WAR file</echo>
+		<copy file="./build/${project-name}.war" todir="${deployDest}" overwrite="true">
+		</copy>
+	</target>
+
+</project>
