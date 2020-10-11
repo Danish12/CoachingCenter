@@ -280,9 +280,9 @@ public class UsersController {
 		return JSONValue.toJSONString(array);
 	}
 
-	@RequestMapping("/user")
+	@RequestMapping("/users")
 	public String user(Model model,Map<String, Object> map) {
-		return "masterCrudUser";
+		return "masterCrudUsers";
 	}
 	
 	@RequestMapping(value="/listUser")

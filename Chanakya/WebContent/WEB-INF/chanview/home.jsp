@@ -64,7 +64,46 @@
 
   <main id="main">
   
-    <section id="popular-courses" class="courses">
+    
+    
+    <section id="latest" class="latest">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Latest</h2>
+          <p>Latest Articles</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+            <table cellspacing="5" cellpadding="5" border="0" style="border-color:Black;border-width:0px;height:100%;width:98%;">
+				<tbody>
+					<th>NOTICE</th>
+					<c:forEach items="${notices}" var="blog">
+						<tr>
+							<td ><a href="${pageContext.request.contextPath}/blog/${blog.url}">${blog.title}</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
+            <table cellspacing="5" cellpadding="5" border="0" style="border-color:Black;border-width:0px;height:100%;width:98%;">
+				<tbody>
+					<th>CURRENT AFFAIR</th>
+					<c:forEach items="${currentAffairs}" var="blog">
+						<tr>
+							<td ><a href="${pageContext.request.contextPath}/blog/${blog.url}">${blog.title}</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+	<section id="popular-courses" class="courses">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -106,45 +145,6 @@
         </div>
       </div>
     </section>
-    
-    <section id="latest" class="latest">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Latest</h2>
-          <p>Latest Articles</p>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
-            <table cellspacing="5" cellpadding="5" border="0" style="border-color:Black;border-width:0px;height:100%;width:98%;">
-				<tbody>
-					<th>NOTICE</th>
-					<c:forEach items="${notices}" var="blog">
-						<tr>
-							<td ><a href="${pageContext.request.contextPath}/blog/${blog.url}">${blog.title}</a></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
-            <table cellspacing="5" cellpadding="5" border="0" style="border-color:Black;border-width:0px;height:100%;width:98%;">
-				<tbody>
-					<th>CURRENT AFFAIR</th>
-					<c:forEach items="${currentAffairs}" var="blog">
-						<tr>
-							<td ><a href="${pageContext.request.contextPath}/blog/${blog.url}">${blog.title}</a></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End About Section -->
-
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">

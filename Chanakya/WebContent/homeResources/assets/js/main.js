@@ -9,6 +9,7 @@
 
   // Preloader
   $(window).on('load', function() {
+	//  document.querySelector('.vjs-big-play-button').addEventListener('click', player.requestFullscreen);
     if ($('#preloader').length) {
       $('#preloader').delay(100).fadeOut('slow', function() {
         $(this).remove();

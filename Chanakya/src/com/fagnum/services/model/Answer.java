@@ -13,6 +13,14 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "ANSWER")
 public class Answer {
 
+	public Answer(String description, int optionNumber) {
+		this.description = description;
+		this.optionNumber = optionNumber;
+	}
+	
+	public Answer() {
+	}
+
 	@Id
 	@Column(name = "ANSWER_ID")
 	@GeneratedValue(generator = "uuid")
@@ -22,8 +30,8 @@ public class Answer {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
-	@Column(name = "IS_CORRECT")
-	boolean isCorrect;
+	@Column(name = "optionNumber")
+	private int optionNumber;
 
 	@Column(name = "IMAGE_URL")
 	String imageUrl;
@@ -55,20 +63,20 @@ public class Answer {
 		this.description = description;
 	}
 
-	public boolean isCorrect() {
-		return isCorrect;
-	}
-
-	public void setCorrect(boolean isCorrect) {
-		this.isCorrect = isCorrect;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public int getOptionNumber() {
+		return optionNumber;
+	}
+
+	public void setOptionNumber(int optionNumber) {
+		this.optionNumber = optionNumber;
 	}
 
 }

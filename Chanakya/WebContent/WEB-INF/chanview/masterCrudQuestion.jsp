@@ -66,7 +66,7 @@
 							<h1 style="font-size: 30px"><i class="fa fa-patient-o">Manage Questions for ${onlineTest.name}</i></h1>	
 						</div>
 						<div class="col s6" style="padding-top: 30px;">						               
-							<a class="btn right modal-trigger" href="addUpdateQuestion?onlineTestId=${onlineTest.onlineTestId}">
+							<a class="btn right modal-trigger" href="${pageContext.request.contextPath}/addUpdateQuestion?onlineTestId=${onlineTest.onlineTestId}">
 								<i class="fa fa-plus"></i>&nbsp; Add Question
 							</a>
 						</div>
@@ -102,10 +102,7 @@
 	        sorting: true, //Enable sorting
 	        defaultSorting: 'Name ASC', //Set default sorting
 	        actions: {
-	        	createAction : 'addUpdateQuestion',
-	            listAction: 'listQuestions',
-	            deleteAction: 'deleteQuestion',
-	            updateAction: 'addUpdateQuestion'
+	            listAction: '${pageContext.request.contextPath}/listQuestions?onlineTestId=${onlineTestId}',
 	        },
 	        fields: {
 	        	QuestionId: {
@@ -115,33 +112,13 @@
 	                list: false,
 	                title: 'Question Id',
 	            },
-	            name: {
-	                title: 'Name',
-	                width: '25%',
-	            },
-	            subjects: {
-	                title: 'Subjects',
-	                width: '25%',
-	            },
-	            courses: {
-	                title: 'Courses',
-	                width: '20%',
-	            },
-	            selectedSubjects: {
-	                title: 'selectedSubjects',
-	                visibility: 'hidden'
-	            },
-	            selectedCourses: {
-	                title: 'selectedCourses',
-	                visibility: 'hidden'
-	            },
-	            status: {
-	                title: 'Status',
-	            },
-	            
+	            description: {
+	                title: 'description',
+	                width: '80%',
+	            },	            
 	            action: {
 	                title: 'Action',
-	                width: '30%',
+	                width: '20%',
 	            }
 	        },
 	        recordAdded : function(event, data){

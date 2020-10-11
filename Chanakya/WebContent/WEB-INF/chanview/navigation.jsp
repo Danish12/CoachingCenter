@@ -4,8 +4,8 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="${pageContext.request.contextPath}/">Home</a></li>
-          <li><a href="${pageContext.request.contextPath}/#about">About</a></li>
           <li><a href="${pageContext.request.contextPath}/#popular-courses">Courses</a></li>
+          <li><a href="${pageContext.request.contextPath}/#about">About</a></li>
           <li><a href="${pageContext.request.contextPath}/#trainers">Trainers</a></li>
           <li><a href="${pageContext.request.contextPath}/watch-videos">Videos</a></li>
           <!-- <li><a href="pricing.jsp">Pricing</a></li> -->
@@ -16,6 +16,8 @@
 	              <li><a href="${pageContext.request.contextPath}/course">Courses</a></li>
 	              <li><a href="${pageContext.request.contextPath}/subject">Subjects</a></li>
 	              <li><a href="${pageContext.request.contextPath}/videos">Videos</a></li>
+	              <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
+	              <li><a href="${pageContext.request.contextPath}/testList">Online Test</a></li>
 	            </ul>
 	          </li>
           </c:if>

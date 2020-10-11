@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
-  <script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
 
 <%@ include file="header.jsp"%>
 
@@ -51,7 +51,6 @@
 				  </c:forEach>	     		
 	      		</c:otherwise>
 	      	</c:choose>
-              	
             </div>
           </div>
 
@@ -88,5 +87,4 @@
 
 <%@ include file="footer.jsp"%>
 </body>
-
 </html>

@@ -33,17 +33,25 @@ public class Question {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
+	@Column(name = "CORRECT_ANSWER")
+	private String correctAnswer;
+
 	@Column(name = "IMAGE_URL")
 	private String imageUrl;
-	
-	@Lob
-	String solutionDetail;
 
+	@Lob
+	@Column(name = "SOLUTION")
+	String solutionDetail;
 
 	@ManyToMany(targetEntity = Answer.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "QUESTION_ANSWER", joinColumns = { @JoinColumn(name = "QUESTION_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "SUBJECT_ID") })
+			@JoinColumn(name = "ANSWER_ID") })
 	private Set<Answer> answers = new HashSet<>();
+	
+	@ManyToMany(targetEntity = Subject.class, cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "QUESTION_SUBJECTS", joinColumns = { @JoinColumn(name = "QUESTION_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "SUBJECT_ID") })
+	private Set<Subject> subjects = new HashSet<>();
 
 	@Embedded
 	private ByAndTimeStamp byAndTimeStamp;
@@ -87,7 +95,7 @@ public class Question {
 	public void setByAndTimeStamp(ByAndTimeStamp byAndTimeStamp) {
 		this.byAndTimeStamp = byAndTimeStamp;
 	}
-	
+
 	public String getSolutionDetail() {
 		return solutionDetail;
 	}
@@ -95,21 +103,46 @@ public class Question {
 	public void setSolutionDetail(String solutionDetail) {
 		this.solutionDetail = solutionDetail;
 	}
+
+	public String getCorrectAnswer() {
+		return correctAnswer;
+	}
+
+	public void setCorrectAnswer(String correctAnswer) {
+		this.correctAnswer = correctAnswer;
+	}
 	
+	public Set<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(Set<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+
 	public JSONObject toJSON(String testId) {
 		JSONObject object = new JSONObject();
 		object.put("QuestionId", this.getQuestionId());
 
 		object.put("description", this.getDescription());
 
-		object.put("imageUrl", this.getImageUrl());
+		for (Answer answer : answers) {
+			object.put("option" + answer.getOptionNumber(), answer.getDescription());
+		}
+
+		String subjectStr = "";
+		for (Subject subject : subjects) {
+			subjectStr = subjectStr + "," + subject.getSubjectId();
+		}
+		object.put("subjectIds", subjectStr);
 
 		object.put("action",
 				"<div class=''><div class=''>"
-						+ "<a class='btn btn-primary btn pull-left' data-toggle='modal' href='addUpdateQuestion?QuestionId="
+						+ "<a class='btn btn-primary btn pull-left' data-toggle='modal' href='addUpdateQuestion?questionId="
 						+ this.getQuestionId() + "&onlineTestId=" + testId
 						+ "' style='color: white; padding: 0px 6px;' " + " title='Update Question Details'>Update</a>"
-						+ "<a class='btn btn-primary btn pull-left' data-toggle='modal' href='deleteQuestion?QuestionId="
+						+ "<a class='btn btn-primary btn pull-left' data-toggle='modal' href='deleteQuestion?questionId="
 						+ this.getQuestionId()
 						+ "' style='color: white; padding: 0px 6px;margin-left: 1%;'  title='Delete Question'"
 						+ ">Delete</a></div></div>");
