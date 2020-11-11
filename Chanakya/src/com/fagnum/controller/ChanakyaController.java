@@ -1,6 +1,10 @@
 package com.fagnum.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -14,6 +18,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fagnum.services.util.MailThread;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.JSONValue;
@@ -75,6 +80,9 @@ public class ChanakyaController extends BaseAppController{
 		List<Blog> notices  = blogService.findBySubject(noticeBoard.getSubjectId(), "0", "5");
 		request.setAttribute("notices", notices);
 		request.setAttribute("currentAffairs", currentAffairs);
+
+
+
 		return page;
 	}
 
@@ -249,14 +257,12 @@ public class ChanakyaController extends BaseAppController{
 		String emailId = request.getParameter("emailId");
 		String contactNumber = request.getParameter("contactNumber");
 		String name = request.getParameter("name");
-		String message = request.getParameter("message");
 
 		Enquiry enquiry = new Enquiry();
 		enquiry.setName(name);
 		enquiry.setEmailId(emailId);
-		enquiry.setMessage(message);
 		enquiry.setContactNumber(contactNumber);
-		enquiry.setDate(new java.sql.Date(new java.util.Date().getTime()));
+		//enquiry.setDate(new java.sql.Date(new java.util.Date().getTime()));
 
 		ByAndTimeStamp byAndTimeStamp = new ByAndTimeStamp();
 		byAndTimeStamp.setCreatedBy(emailId);
@@ -272,11 +278,11 @@ public class ChanakyaController extends BaseAppController{
 			jsonObject.put("messageTwo", "");
 			String subject = "Enquiry from " + emailId;
 			String emailMessage = "<html><body>" + "Enquiry from User<br><br>" + "Name " + name + "<br> " + "Email Id "
-					+ emailId + "<br> " + "Contact Number " + contactNumber + "<br> " + "Message " + message + "<br> "
+					+ emailId + "<br> " + "Contact Number " + contactNumber + "<br> "
 					+ "<br><br>Regards," + "<br>Team " + resource.getString("name") + "<br>" + "Email:"
 					+ resource.getString("care") + "<br>" + "</body></html>";
-			/*MailThread send = new MailThread("care@fagnum.com", subject, emailMessage);
-			send.start();*/
+			MailThread send = new MailThread("care@fagnum.com", subject, emailMessage);
+			send.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 			jsonObject.put("status", false);

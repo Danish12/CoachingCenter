@@ -8,7 +8,7 @@
           <li><a href="${pageContext.request.contextPath}/#about">About</a></li>
           <li><a href="${pageContext.request.contextPath}/#trainers">Trainers</a></li>
           <li><a href="${pageContext.request.contextPath}/watch-videos">Videos</a></li>
-          <!-- <li><a href="pricing.jsp">Pricing</a></li> -->
+          <li><a href="${pageContext.request.contextPath}/online-test">Online Test</a></li>
           <c:if  test="${pageContext.request.userPrincipal.name != null}">
 	          <li class="drop-down"><a href="">Admin</a>
 	            <ul>
@@ -26,12 +26,12 @@
             		<li><a href="${pageContext.request.contextPath}/j_spring_security_logout">Logout</a>
           		</c:when>
           		<c:otherwise>
-          			<li><a href="${pageContext.request.contextPath}/contact/">Contact</a></li>
+          			<li><a href="${pageContext.request.contextPath}/#contact">Contact</a></li>
           			<li><a href="${pageContext.request.contextPath}/login/">Login</a>		
           		</c:otherwise>
           </c:choose>
         </ul>
       </nav>
-      <a href="/Chanakya/courses/" class="get-started-btn">Get Started</a>
+      <a href="${pageContext.request.contextPath}/#popular-courses" class="get-started-btn">Get Started</a>
     </div>
   </header>

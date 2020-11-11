@@ -9,32 +9,13 @@
 
 <script src="mainResources/js/jtable.js" type="text/javascript"></script>
 <link href="mainResources/css/blue/jtable.css" rel="stylesheet" type="text/css">
+
 <script type="text/javascript" src="mainResources/js/materialize.min.js"></script>
+
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
+	
 <style>
-.modal{
-    position: fixed;
-    left: 0;
-    right: 0;
-    background-color: #fafafa;
-    max-height: 70%;
-    width: 55%;
-    margin: auto;
-    overflow-y: auto;
-    border-radius: 2px;
-    will-change: top, opacity;
-	}
-	.modal .modal-content{
-		padding: 24px;
-}
-.modal-content {
-    border-radius: 0px;
-    box-shadow: none;
-    background: rgba(255, 255, 255, 0.94);
-    border: 0;
-	}
 
 	.jtable-command-button {
 		display: none !important;
@@ -54,7 +35,6 @@
 </style>
 <body>
 	<%@ include file="navigation.jsp"%>
-	
 	<main id="main" style="padding-top: 6%;">
 	    <br>
 		<div class="row11">
@@ -62,15 +42,15 @@
 				<div id="courseDiv" class="row1">
 					<div class="row1">
 						<div class="col s6">
-							<h1 style="font-size: 30px"><i class="fa fa-patient-o"> Students</i></h1>	
+							<h1 style="font-size: 30px"><i class="fa fa-patient-o"> Course</i></h1>	
 						</div>
 						<div class="col s6" style="padding-top: 30px;">						               
-							<a class="btn right modal-trigger" href="#searchModal" onclick="blankUpdateForm()"><i class="fa fa-plus"></i>&nbsp; Add Student</a>
+							<a class="btn right modal-trigger" href="#searchModal" onclick="blankUpdateForm()"><i class="fa fa-plus"></i>&nbsp; Add Course</a>
 						</div>
 					</div>
 					<div class="row1">
 						<div class="col s12">
-							<div class="searchResult" id="listVideoContainer">
+							<div class="searchResult" id="listCourseContainer">
 							</div>
 						</div>
 					</div>
@@ -80,8 +60,8 @@
 		<div class="modal" id="searchModal" style="width: 70% !important;margin-left: 15%;">
 			<div class="modal-content">
 				<div class="row1" style="width:90%">
-					<div class="col s12" style="padding: 0 0px;">
-		    			<h4 style="font-size: 30px"><i class="fa fa-shield" style="color: #03a9f4"></i> Student</h4>
+					<div class="col s12" >
+		    			<h4 style="font-size: 30px"><i class="fa fa-shield" style="color: #03a9f4"></i> Course</h4>
 		    		</div>
 				</div>
 				<div class="row1 " style="width:90%">
@@ -99,58 +79,38 @@
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
-							<label for="name">Email Address</label>
-							<input type="text" class="form-control input-sm" name="emailAddress" id="emailAddress" placeholder="emailAddress">
+							<label for="name">Price</label>
+							<input type="text" class="form-control input-sm" name="price" id="price" placeholder="Price">
 						</div>
 					</div>
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
-							<label for="name">Mobile</label>
-							<input type="text" class="form-control input-sm" name="mobile" id="mobile" placeholder="mobile">
-						</div>
-					</div>
-					
-					<div class="input-field col s12 m6">
-						<div class="form-group">
-		      				<label  for="genre" >Course</label> 
-			      			<select class="form-control input-sm m-select" name="courses" multiple="multiple" id="courses" >
-										<c:forEach items="${courses}" var="course">
-											<option value="${course.courseId}"> ${course.name}</option>
-										</c:forEach>
-							</select>   
-						</div>
-		      		</div>
-					
-					<div class="input-field col s12 m6">
-						<div class="form-group">
-							<label for="name">Subscription Start Date</label>
-							<input type="text" class="form-control input-sm" name="startDate" id="startDate" placeholder="startDate">
-						</div>
-					</div>
-					
-					<div class="input-field col s12 m6">
-						<div class="form-group">
-							<label for="name">Subscription End Date</label>
-							<input type="text" class="form-control input-sm" name="endDate" id="endDate" placeholder="endDate">
-						</div>
-					</div>
-					
-					<div class="input-field col s12 m6">
-						<div class="form-group">
-		      				<label for="url">Prime/Public</label>      
-		      				<select class="form-control input-sm m-select" name="isPrime" id="isPrime" >
-									<option value="true">PRIME</option>
-									<option value="false">PUBLIC</option>
+						    	<label for="name">Subjects</label>
+							<select class="form-control input-sm m-select" name="subject" multiple="multiple" id="subject" >
+								<c:forEach items="${subjects}" var="subject">
+									<option value="${subject.subjectId}"> ${subject.name}</option>
+								</c:forEach>
 							</select>
-		      			</div>
-		      		</div>					
+						</div>
+					</div>
+					
+					<div class="input-field col s12 m6">
+						<div class="form-group">
+							<!-- <label for="Status">Status</label> -->
+							<select class="form-control input-sm m-select" name="status" id="status" >
+								<option value="ACTIVE">ACTIVE</option>
+								<option value="DEACTIVE">DEACTIVE</option>
+							</select>
+						</div>
+					</div>
+					
 				</div>
 				<div class="row1 center">
 					<div class="col s12">
 						<br>
-						<input type="hidden" id="action"><input type="hidden" id="VideoId" name="VideoId">
-						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateVideoDetail()">
+						<input type="hidden" id="action"><input type="hidden" id="courseId">
+						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateCourseDetail()">
 							<i class="fa fa-plus"></i>&nbsp; Update Details
 						</a>
 			           	<a class="btn cancelBtnColor" href="#" style="color: white;background-color: #e60d53" onclick="$('#searchModal').closeModal();">
@@ -166,7 +126,6 @@
 <c:set var="excludeBootstrapNjquery" value="true" ></c:set>
 <%@ include file="footer.jsp"%>
 </body>
-
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -178,61 +137,50 @@
 	$("#action").val('add');
 	
 	$(document).ready(function () {
-	    $('#listVideoContainer').jtable({
+	    $('#listCourseContainer').jtable({
 	        title: 'Course List',
 	        paging: true, //Enable paging
 	        pageSize: 10, //Set page size (default: 10)
 	        sorting: true, //Enable sorting
 	        defaultSorting: 'Name ASC', //Set default sorting
 	        actions: {
-	        	createAction : 'addUpdateVideo',
-	            listAction: 'listUser',
-	            deleteAction: 'deleteVideo',
-	            updateAction: 'addUpdateVideo'
+	        	createAction : 'addCourse',
+	            listAction: 'listCourse',
+	            deleteAction: 'deleteCourse',
+	            updateAction: 'editCourse'
 	        },
 	        fields: {
-	        	VideoId: {
+	        	CourseId: {
 	                key: true,
 	                create: false,
 	                edit: false,
 	                list: false,
-	                title: 'Video Id',
+	                title: 'Course Id',
 	            },
 	            name: {
 	                title: 'Name',
 	                width: '20%',
 	            },
-	            courses: {
-	                title: 'Courses',
-	                width: '20%',
-	            },
-	            selectedCourses: {
-	                title: 'selectedCourses',
+	            price: {
+	                title: 'Price',
 	                width: '10%',
-	                visibility: 'hidden'
 	            },
-	            subjects: {
+	            Subject: {
 	                title: 'Subjects',
-	                width: '30%',
+	                width: '50%',
 	            },
 	            selectedSubjects: {
 	                title: 'selectedSubjects',
 	                width: '60%',
 	                visibility: 'hidden'
 	            },
-	            videoLocation : {
-	            	  title: 'selectedSubjects',
-		                width: '60%',
-		                visibility: 'hidden'
-	            },
-	            isPrime: {
-	                title: 'Is Prime',
-	                width: '10%',
+	            status: {
+	                title: 'Status',
 	            },
 	            
 	            action: {
 	                title: 'Action',
-	                width: '10%',
+	                width: '20%',
 	            }
 	        },
 	        recordAdded : function(event, data){
@@ -240,27 +188,24 @@
 	        } 
 	    });
 	    //Load Course list from server
-	    $('#listVideoContainer').jtable('load', function(){
+	    $('#listCourseContainer').jtable('load', function(){
 	    	$(".jtable-toolbar-item-add-record").hide();	
 	    });
 	    
 	});
 	
-	function updateVideoDetail() {
+	function updateCourseDetail() {
 		$("#errorMessage").text("");
 		if(document.getElementById("action").value.match("add")) {
-			$('#listVideoContainer').jtable('addRecord', {
+			$('#listCourseContainer').jtable('addRecord', {
 			    record: {
 			    	name:$("#name").val(),
+			    	price:$("#price").val(),
 			    	status:$("#status").val(),
-			    	action:'ADD',
-			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
-			    	subjects:$("#subjects").val()
+			    	subject:$("#subject").val()
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listCourseContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -273,20 +218,16 @@
 			});
 		}
 		if(document.getElementById("action").value.match("update")) {
-			$('#listVideoContainer').jtable('updateRecord', {
+			$('#listCourseContainer').jtable('updateRecord', {
 			    record: {
-			    	VideoId:$("#VideoId").val(),
-			    	action:'update',
+			    	CourseId:$("#courseId").val(),
 			    	name:$("#name").val(),
 			    	status:$("#status").val(),
-			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
-			    	subjects:$("#subjects").val()
-			    	
+			    	price:$("#price").val(),
+			    	subject:$("#subject").val()
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listCourseContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -299,42 +240,25 @@
 			});
 		}
 	}
-
 	
-	function loadVideoDetail(VideoId) {
-		
-		$.ajax({
-			  url: "loadVideoDetails",
-			  type: 'GET',
-			  dataType: 'json', 
-			  data : {videoId : VideoId},
-			  success: function(json){
-					$("#VideoId").val(json.VideoId);
-					$("#name").val(json.name);
-					$("#subjects").val(json.subjectIds.split(","));
-					$("#courses").val(json.courseIds.split(","));
-					$('#videoLocation').val(json.videoLocation);
-					$('select').select2();
-					$("#action").val('update');
-					$('#searchModal').openModal();
-			  }
-		});
-		
-		
+	function loadCourseDetail(courseId, name, subject, subjectId, price) {
+		$("#action").val('update');
+		$('#searchModal').openModal();
+		$("#courseId").val(courseId);
+		$("#name").val(name);
+		$("#price").val(price);
+		$("#subject").val(subjectId.split(","));
+		 $('select').select2();
 	}
 	
 	function blankUpdateForm() {
-		$('#searchModal').openModal();
-		$("#onlineTestId").val('');
+		$("#courseId").val('');
     	$("#name").val('');
         $("#action").val('add');
-        $("#instruction").val('');
-        $("#subjects").val('');
-        $("#courses").val('');
+        $("#price").val('');
+        $("#subject").val('');
         $("#errorMessage").text("");
         $('select').select2();
-    	$('#videoLocation').val("");
 	}
-	
 </script>
 </html>

@@ -1,7 +1,6 @@
 package com.fagnum.services.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -118,6 +117,19 @@ public class Question {
 
 	public void setSubjects(Set<Subject> subjects) {
 		this.subjects = subjects;
+	}
+
+	public List<Answer> getSortedAnswers() {
+		List<Answer> answers = new ArrayList<>();
+		answers.addAll(this.answers);
+		Collections.sort(answers,
+				new Comparator<Answer>() {
+					@Override
+					public int compare(Answer an1, Answer an2) {
+						return Integer.compare(an1.getOptionNumber(), an2.getOptionNumber());
+					}
+				});
+		return answers;
 	}
 
 

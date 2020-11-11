@@ -1,7 +1,6 @@
 package com.fagnum.services.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -15,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @Entity
@@ -40,6 +40,9 @@ public class OnlineTest {
 
 	@Column(name = "IS_PRIME")
 	Boolean isPrime;
+
+	@Column(name = "SECOND")
+	Integer second;
 
 	@Column(name = "STATUS")
 	private String status;
@@ -117,6 +120,20 @@ public class OnlineTest {
 		return questions;
 	}
 
+	public List<Question> getSortedQuestions() {
+		List<Question> listQuestions = new ArrayList<>();
+		listQuestions.addAll(this.questions);
+
+		Collections.sort(listQuestions, new Comparator<Question>() {
+			@Override
+			public int compare(Question question, Question question2) {
+				return question2.getByAndTimeStamp().getCreatedTs().compareTo(question.getByAndTimeStamp().getCreatedTs());
+			}
+		});
+
+		return listQuestions;
+	}
+
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
@@ -132,13 +149,39 @@ public class OnlineTest {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	public JSONObject toJSON(){
+
+	public Map<String, Question> getQuestionMap(){
+		Map<String, Question> questionsMap = new HashMap<>();
+ 		for(Question question : this.getQuestions()){
+			questionsMap.put(question.getQuestionId(), question);
+		}
+ 		return questionsMap;
+	}
+
+	public Boolean getPrime() {
+		return isPrime;
+	}
+
+	public void setPrime(Boolean prime) {
+		isPrime = prime;
+	}
+
+	public Integer getSecond() {
+		return second;
+	}
+
+	public void setSecond(Integer second) {
+		this.second = second;
+	}
+
+	public JSONObject toJSON() throws JSONException {
 		JSONObject object = new JSONObject();
 		object.put("OnlineTestId", this.getOnlineTestId());
 		object.put("instructions", this.getInstruction());
 		object.put("status", this.getStatus());
 		object.put("name", this.getName());
+		object.put("isPrime", this.isPrime);
+		object.put("second", this.second/60);
 		
 		String courseStr = "";
 		String courseIds = ""; 
@@ -172,8 +215,7 @@ public class OnlineTest {
 		}else{
 			object.put("isPrime", "PRIME");
 		}
-		
-		
+
 		return object;
 	}
 

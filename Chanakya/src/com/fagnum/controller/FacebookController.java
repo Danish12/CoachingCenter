@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -34,7 +35,7 @@ public class FacebookController {
 	}
 	
 	@RequestMapping(value = "/listFacebook")
-	public @ResponseBody String listFacebook(HttpServletRequest request) {
+	public @ResponseBody String listFacebook(HttpServletRequest request) throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		String startIndex = request.getParameter("jtStartIndex");
@@ -53,7 +54,7 @@ public class FacebookController {
 
 	@RequestMapping(value = "/addFacebook", method = RequestMethod.POST)
 	public @ResponseBody String addFacebook(@ModelAttribute("addFacebook") Facebook facebook, BindingResult result, SessionStatus status,
-			HttpServletRequest request, Principal principal) {
+			HttpServletRequest request, Principal principal) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		ByAndTimeStamp byAndTimeStamp = new ByAndTimeStamp();
 		try {
@@ -79,7 +80,7 @@ public class FacebookController {
 
 	@RequestMapping(value = "/editFacebook", method = RequestMethod.POST)
 	public @ResponseBody String editFacebook(@ModelAttribute("addFacebook") Facebook facebook, BindingResult result, SessionStatus status,
-			HttpServletRequest request, Principal principal) {
+			HttpServletRequest request, Principal principal) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			Facebook facebook2 = facebookService.read(Facebook.class, facebook.getFacebookId());
@@ -102,7 +103,7 @@ public class FacebookController {
 
 	}
 
-	private JSONObject convertToJson(Facebook facebook) {
+	private JSONObject convertToJson(Facebook facebook) throws JSONException {
 		JSONObject object = new JSONObject();
 		object.put("facebookId", facebook.getFacebookId());
 		object.put("groupName", facebook.getGroupName());

@@ -38,6 +38,7 @@ public class AbstractDaoImpl<T, PK extends Serializable> implements AbstractDao<
 			session.save(o);
 			transaction.commit();
 		} catch (Exception e) {
+			e.printStackTrace();
 			transaction.rollback();
 			throw e;
 		} finally {

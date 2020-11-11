@@ -13,18 +13,9 @@ import com.fagnum.services.service.VideoStreamService;
 @RequestMapping
 public class VideoStreamController {
 
-    /*private VideoStreamService videoStreamService;
-
-    public VideoStreamController(VideoStreamService videoStreamService) {
-        this.videoStreamService = videoStreamService;
-    }*/
-
     @RequestMapping("/stream/{fileName}")
     public ResponseEntity<byte[]> streamVideo(@RequestHeader(value = "Range", required = false) String httpRangeList,
                                                     @PathVariable("fileName") String fileName) {
         return new VideoStreamService().prepareContent(fileName, httpRangeList);
     }
-    /*public VideoStreamController() {
-		// TODO Auto-generated constructor stub
-	}*/
 }

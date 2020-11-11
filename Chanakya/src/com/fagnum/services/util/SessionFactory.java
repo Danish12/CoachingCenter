@@ -4,7 +4,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SessionFactory {
 
-	private static ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+	private static ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] {"main/resources/applicationContext.xml"});
 
 	private static org.hibernate.SessionFactory sessionFactory;
 

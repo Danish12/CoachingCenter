@@ -17,7 +17,7 @@ public class TwitterTweetTest {
 	
 	public static void main(String [] args) {
 		
-		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		appContext = new ClassPathXmlApplicationContext(new String[] {"main/resources/applicationContext.xml"});
 		BlogService blogService = (BlogService) appContext.getBean("blogService");
 		Blog blog = new Blog();
 		

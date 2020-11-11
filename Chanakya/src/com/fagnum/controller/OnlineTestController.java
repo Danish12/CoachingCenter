@@ -2,28 +2,20 @@ package com.fagnum.controller;
 
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.fagnum.services.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fagnum.services.model.ByAndTimeStamp;
-import com.fagnum.services.model.Category;
-import com.fagnum.services.model.Course;
-import com.fagnum.services.model.OnlineTest;
-import com.fagnum.services.model.Subject;
-import com.fagnum.services.service.CategoryService;
 import com.fagnum.services.service.CourseService;
 import com.fagnum.services.service.OnlineTestService;
 import com.fagnum.services.service.SubjectService;
@@ -31,16 +23,9 @@ import com.fagnum.services.service.SubjectService;
 @Controller
 public class OnlineTestController extends BaseAppController {
 
-	CategoryService categoryService = AppController.getCategoryService();
 	CourseService courseService = AppController.getCourseService();
 	SubjectService subjectService = AppController.getSubjectService();
 	OnlineTestService onlineTestService = AppController.getOnlineTestService();
-
-	List<Category> categoryList = categoryService.getAllList(Category.class);
-
-	/*************************
-	 * Blog for user reading starts
-	 ***********************************/
 
 	@RequestMapping("/testList")
 	public String testList(HttpServletRequest request) {
@@ -48,6 +33,89 @@ public class OnlineTestController extends BaseAppController {
 		request.setAttribute("subjects", subjectService.getAllList(Subject.class));
 		return "masterCrudOnlineTest";
 	}
+
+	@RequestMapping("/online-test")
+	public String onlineTest(HttpServletRequest request) {
+
+		//request.setAttribute("videos", videoService.getAllList(Video.class));
+		request.setAttribute("courses", courseService.getAllList(Course.class));
+
+		return "onlineTestDetails";
+	}
+
+	@RequestMapping(value = "/online-test-submit", method =  RequestMethod.POST)
+	public String submitOnlineTest( HttpServletRequest request) {
+
+		String testId = request.getParameter("testId");
+		OnlineTest onlineTest = onlineTestService.read(OnlineTest.class, testId);
+		if (null == onlineTest) {
+			return "errorPage";
+		}
+		Set<Question> questions = onlineTest.getQuestions();
+		int correctCount = 0;
+		List<OnlineTestUserResponse> onlineTestUserResponses = new ArrayList<OnlineTestUserResponse>();
+		for(Question question : questions){
+			String response = request.getParameter(question.getQuestionId());
+			boolean isCorrect = false;
+			if(null != response && response.equals(question.getCorrectAnswer())){
+				isCorrect = true;
+				correctCount++;
+			}
+			onlineTestUserResponses.add(new OnlineTestUserResponse(question.getQuestionId(), isCorrect, response, question.getSubjects()));
+		}
+		request.setAttribute("onlineTest", onlineTest);
+
+		request.setAttribute("correctCount", correctCount);
+		request.setAttribute("onlineTestUserResponses", onlineTestUserResponses);
+
+		return "onlineTestResults";
+	}
+
+
+	@RequestMapping("/online-test/{courseName}")
+	public String listOnlineTestCourse(@PathVariable("courseName") String courseName, HttpServletRequest request) {
+
+		Course course = courseService.findCourse(courseName);
+		if (null == course) {
+			return "errorPage";
+		}
+
+		request.setAttribute("onlineTests", onlineTestService.findByCourse(course.getCourseId(), "0", "10"));
+		request.setAttribute("course", course);
+
+		return "onlineTestDetails";
+	}
+
+	@RequestMapping("/online-test/{courseName}/{subjectName}")
+	public String listOnlineTestCourseSubject(@PathVariable("courseName") String courseName,
+										   @PathVariable("subjectName") String subjectName, HttpServletRequest request) {
+
+		Course course = courseService.findCourse(courseName);
+		if (null == course) {
+			return "errorPage";
+		}
+
+		Subject subject = subjectService.findSubject(subjectName);
+
+		request.setAttribute("onlineTests",
+				onlineTestService.findByCourseAndSubject(course.getCourseId(), subject.getSubjectId(), "0", "10"));
+		request.setAttribute("course", course);
+
+		return "onlineTestDetails";
+	}
+
+	@RequestMapping("/online-test-details/{testId}")
+	public String loadOnlineTestDetails(@PathVariable("testId") String testId, HttpServletRequest request) {
+
+		OnlineTest onlineTest = onlineTestService.read(OnlineTest.class, testId);
+		if (null == onlineTest) {
+			return "errorPage";
+		}
+		request.setAttribute("onlineTest", onlineTest);
+
+		return "listOnlineTestQuestions";
+	}
+
 
 	/*************************
 	 * Online Test Crud Starts
@@ -62,6 +130,7 @@ public class OnlineTestController extends BaseAppController {
 		String instruction = request.getParameter("instruction");
 		String isPrime = request.getParameter("isPrime");
 		String status = request.getParameter("status");
+		String seconds = request.getParameter("second");
 		String onlineTestId = request.getParameter("OnlineTestId");
 		String[] courses = request.getParameterValues("courses[]");
 		String[] subjects = request.getParameterValues("subjects[]");
@@ -77,6 +146,7 @@ public class OnlineTestController extends BaseAppController {
 		onlineTest.setIsPrime(Boolean.valueOf(isPrime));
 		onlineTest.setStatus(status);
 		onlineTest.setName(name);
+		onlineTest.setSecond(Integer.parseInt(seconds)*60);
 		onlineTest.setInstruction(instruction);
 		
 		if (null != courses) {
@@ -135,13 +205,8 @@ public class OnlineTestController extends BaseAppController {
 		parameterList.add("ACTIVE");
 		parameterList.add("DEACTIVE");
 
-		//boolean isSearch = ServletRequestUtils.getBooleanParameter(request, "search", false);
-		List<OnlineTest> list = null;
-
-		String query = "";
-
-		query = new String("from OnlineTest ot where ot.status = ? or ot.status = ? order by ot.onlineTestId desc");
-		list = onlineTestService.getDynamicList(parameterList, query, startIndex, pageSize);
+		String query = "from OnlineTest ot where ot.status = ? or ot.status = ? order by ot.onlineTestId desc";
+		List<OnlineTest> list =  onlineTestService.getDynamicList(parameterList, query, startIndex, pageSize);
 
 		for (OnlineTest onlineTest : list) {
 			jsonArray.put(onlineTest.toJSON());
@@ -162,26 +227,11 @@ public class OnlineTestController extends BaseAppController {
 	
 	@RequestMapping(value = "/publishTest", method = RequestMethod.GET)
 	public String publishBlog(Model model, Map<String, Object> map, HttpServletRequest request, Principal principal) {
-		/*String blogId = request.getParameter("id");
-		Blog blog = blogService.read(Blog.class, blogId);
-		blog.setDate(DateAndTimeFormat.clientDate(new java.sql.Date(new Date().getTime())));
-		ByAndTimeStamp byAndTimeStamp = blog.getByAndTimeStamp();
-		byAndTimeStamp.setCreatedBy(principal.getName());
-		byAndTimeStamp.setCreatedTs(new Timestamp(new Date().getTime()));
-		byAndTimeStamp.setModifiedBy(principal.getName());
-		byAndTimeStamp.setModifiedTs(new Timestamp(new Date().getTime()));
-		blog.setStatus(Constants._PUBLISH);
-		blogService.update(blog);
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+
 		return "blogList";
 	}
-
 	/*************************
-	 * Online Test Crud Ends
-	 ***********************************/
-
+	 * Online Test Crud END
+	 ********************************************/
 
 }

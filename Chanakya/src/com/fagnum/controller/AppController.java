@@ -25,7 +25,7 @@ import com.fagnum.services.service.VideoService;
 
 public class AppController {
 
-	private static ApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+	private static ApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml"});
 
 	private static BlogService blogService;
 	private static DocumentMediaService documentMediaService;

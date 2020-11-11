@@ -28,11 +28,7 @@ public class Enquiry {
 	private String emailId;
 	@Column(name = "CONTACT_NUMBER")
 	private String contactNumber;
-	@Column(name = "MESSAGE")
-	private String message;
-	@Column(name = "STATUS")
-	private String status;
-	
+
 	@Embedded
 	private ByAndTimeStamp byAndTimeStamp;
 
@@ -76,14 +72,6 @@ public class Enquiry {
 		this.name = name;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public ByAndTimeStamp getByAndTimeStamp() {
 		return byAndTimeStamp;
 	}
@@ -99,13 +87,4 @@ public class Enquiry {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 }

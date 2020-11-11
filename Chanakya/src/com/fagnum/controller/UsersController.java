@@ -284,9 +284,9 @@ public class UsersController {
 	public String user(Model model,Map<String, Object> map) {
 		return "masterCrudUsers";
 	}
-	
+
 	@RequestMapping(value="/listUser")
-	public @ResponseBody String listCa(HttpServletRequest request) {
+	public @ResponseBody String listUserDetails(HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		String startIndex = request.getParameter("jtStartIndex");
 		String pageSize = request.getParameter("jtPageSize");

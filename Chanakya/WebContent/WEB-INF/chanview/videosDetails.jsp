@@ -75,8 +75,11 @@
 					  <div>
 			                <span>${video.name}</span>
 			          </div>
-	             </div>   
+	             </div>
 			  </c:forEach>
+			   <c:if test="${empty videos}">
+                  <div class="email" > <h5>Nothing Found. Please choose another course and subject.</h5></div>
+               </c:if>
             </div>
           </div>
         </div>

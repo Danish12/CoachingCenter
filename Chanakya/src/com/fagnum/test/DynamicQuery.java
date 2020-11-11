@@ -28,7 +28,7 @@ public class DynamicQuery {
 
 	public static void main(String[] args) throws Exception {
 
-		appContext = new ClassPathXmlApplicationContext(new String[] { "applicationContext.xml" });
+		appContext = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml"});
 
 		CourseService courseService = AppController.getCourseService();
 		SubjectService subjectService = AppController.getSubjectService();
@@ -38,8 +38,8 @@ public class DynamicQuery {
 		// addBlog(subjectService,courseService, blogService);
 		// findBlogByCourseName(blogService, courseService);
 
-		Course course = courseService.findCourse("UPSE");
-		Subject subject = subjectService.findSubject("GK");
+		Course course = courseService.findCourse("UPSC");
+		Subject subject = subjectService.findSubject("HINDI");
 		Subject subject2 = subjectService.findSubject("Maths");
 		String[] subjects = {subject.getSubjectId(), subject2.getSubjectId()};
 		

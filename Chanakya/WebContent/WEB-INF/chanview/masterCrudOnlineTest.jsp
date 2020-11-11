@@ -97,6 +97,15 @@
 							<input type="hidden" class="form-control input-sm" name="onlineTestId" id="onlineTestId" >
 						</div>
 					</div>
+
+
+					<div class="input-field col s12 m6">
+                    		<div class="form-group">
+                    			<label for="name">Minutes</label>
+                    			<input type="text" class="form-control input-sm" name="second" id="second" placeholder="Number of Minutes allowed to fill in test.">
+                    		</div>
+                    </div>
+
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
@@ -247,6 +256,7 @@
 			    	instruction:$("#instruction").val(),
 			    	status:$("#status").val(),
 			    	action:'ADD',
+			    	second : $('#second').val(),
 			    	courses:$("#courses").val(),
 			    	subjects:$("#subjects").val()
 			    },
@@ -269,6 +279,7 @@
 			    	OnlineTestId:$("#onlineTestId").val(),
 			    	action:'update',
 			    	name:$("#name").val(),
+			    	second : $('#second').val(),
 			    	status:$("#status").val(),
 			    	instruction:$("#instruction").val(),
 			    	courses:$("#courses").val(),
@@ -302,6 +313,7 @@
 					$('#searchModal').openModal();
 					$("#onlineTestId").val(json.OnlineTestId);
 					$("#name").val(json.name);
+					$('#second').val(json.second),
 					$("#instruction").val(json.instructions);
 					$("#subjects").val(json.subjectIds.split(","));
 					$("#courses").val(json.courseIds.split(","));
@@ -319,6 +331,7 @@
         $("#action").val('add');
         $("#instruction").val('');
         $("#subjects").val('');
+        $('#second').val('');
         $("#courses").val('');
         $("#errorMessage").text("");
         $('select').select2();

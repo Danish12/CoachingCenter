@@ -74,11 +74,11 @@ public class QuestionController extends BaseAppController {
 			for (Answer answer : question.getAnswers()) {
 				if (answer.getOptionNumber() == 1) {
 					answer.setDescription(option1Content);
-				} else if (answer.getOptionNumber() == 1) {
+				} else if (answer.getOptionNumber() == 2) {
 					answer.setDescription(option2Content);
-				} else if (answer.getOptionNumber() == 1) {
+				} else if (answer.getOptionNumber() == 3) {
 					answer.setDescription(option3Content);
-				} else if (answer.getOptionNumber() == 1) {
+				} else if (answer.getOptionNumber() == 4) {
 					answer.setDescription(option4Content);
 				}
 			}
@@ -106,6 +106,8 @@ public class QuestionController extends BaseAppController {
 				byAndTimeStamp.setModifiedTs(new Timestamp(new Date().getTime()));
 				question.setByAndTimeStamp(byAndTimeStamp);
 				questionService.save(question);
+				onlineTest.getQuestions().add(question);
+				onlineTestService.update(onlineTest);
 			} else {
 				byAndTimeStamp = question.getByAndTimeStamp();
 				byAndTimeStamp.setModifiedBy(principal.getName());
@@ -115,12 +117,6 @@ public class QuestionController extends BaseAppController {
 			}
 			jsonObject.put("Record", question);
 			jsonObject.put("Result", "OK");
-
-			/*Set<Question> questions = new java.util.HashSet<Question>();
-			questions.add(question);*/
-
-			onlineTest.getQuestions().add(question);
-			onlineTestService.update(onlineTest);
 
 		} catch (Exception e) {
 			jsonObject.put("Result", "Error");
@@ -140,7 +136,7 @@ public class QuestionController extends BaseAppController {
 		String questionId = request.getParameter("questionId");
 		request.setAttribute("status", "ADD");
 		
-		request.setAttribute("subjects", subjectService.getAllList(Subject.class));
+		request.setAttribute("subjects", onlineTest.getSubjects());
 		
 		if(null != questionId || "".equals(questionId)){
 			Question question = questionService.read(Question.class, questionId);
@@ -168,15 +164,14 @@ public class QuestionController extends BaseAppController {
 		String onlineTestId= request.getParameter("onlineTestId");
 		OnlineTest onlineTest = onlineTestService.read(OnlineTest.class, onlineTestId);
 		
-		for(Question question : onlineTest.getQuestions()){
+		for(Question question : onlineTest.getSortedQuestions()){
 			jsonArray.put(question.toJSON(onlineTestId));
 		}
 		
 		jsonObject.put("Records", jsonArray);
-		
-		
+
 		jsonObject.put("Result", "OK");
-		jsonObject.put("TotalRecordCount", questionService.getTableRowCount(Question.class));
+		jsonObject.put("TotalRecordCount", onlineTest.getSortedQuestions().size());
 		return jsonObject.toString();
 	}
 

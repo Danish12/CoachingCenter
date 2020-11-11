@@ -12,23 +12,14 @@
     <div class="breadcrumbs" data-aos="fade-in">
       <div class="container">
         <h2>Contact Us</h2>
-        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
+        <p>To get registered on our website please fill in your information. We will call you back.</p>
       </div>
     </div><!-- End Breadcrumbs -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
-      <div data-aos="fade-up">
-        <!-- <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe> -->
-        <!-- <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=350&amp;hl=en&amp;q=Nagina%20Dhampur%20Rd,%20Dhampur,%20Uttar%20Pradesh%20246761+(Chanakya%20Coaching)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"> -->
-        <!-- <iframe width="100%" height="600" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;coord=52.70967533219885, -8.020019531250002&amp;q=1%20Grafton%20Street%2C%20Dublin%2C%20Ireland&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><br /> -->
-        
-      </div>
-
       <div class="container" data-aos="fade-up">
-
         <div class="row mt-5">
-
           <div class="col-lg-4">
             <div class="info">
               <div class="address">
@@ -55,23 +46,19 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form method="post" role="form" class="php-email-form" id="contactFormId">
               <div class="form-row">
-                <div class="col-md-6 form-group">
+                <div class="col-md-12 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
                   <div class="validate"></div>
                 </div>
-                <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
-                  <div class="validate"></div>
-                </div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                <input type="email" class="form-control" name="emailId" id="emailId" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
                 <div class="validate"></div>
               </div>
               <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                <input type="text" class="form-control" name="contactNumber" id="contactNumber" placeholder="Mobile No" data-rule="minlen:9" data-msg="Please enter at least 9 chars of Mobile No." />
                 <div class="validate"></div>
               </div>
               <div class="mb-3">
@@ -95,3 +82,22 @@
 </body>
 
 </html>
+
+<script>
+$('#contactFormId').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+          url: "${pageContext.request.contextPath}/sendEnquiry",
+          type: 'POST',
+          data : {
+            name : $('#name').val(),
+            name : $('#emailId').val(),
+            name : $('#contactNumber').val()
+          },
+          success: function(json){
+            $('.sent-message').show();
+            $('.sent-message').hide().delay(5000).fadeIn(400);
+          }
+    });
+});
+</script>

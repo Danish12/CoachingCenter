@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @Entity
@@ -293,7 +294,7 @@ public class Blog {
 		return "Blog [blogId=" + blogId + ", url=" + url + ", title=" + title + ", content=" + content + "]";
 	}
 	
-	public JSONObject toJSON(){
+	public JSONObject toJSON() throws JSONException {
 		JSONObject object = new JSONObject();
 		object.put("blogId", this.getBlogId());
 		object.put("url", this.getUrl());
