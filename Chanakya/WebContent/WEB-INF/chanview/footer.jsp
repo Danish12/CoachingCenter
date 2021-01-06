@@ -39,17 +39,16 @@
           </div>
 
           <div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
+            <h4>Website Developer</h4>
+            <p>Site developed and maintained by <a href="tel:+919927793026">9927793026</a></p>
+            <!-- <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
+            </form> -->
           </div>
 
         </div>
       </div>
     </div>
-
     </div>
   </footer><!-- End Footer -->
 

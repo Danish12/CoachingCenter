@@ -15,34 +15,19 @@
         <ol style="height: 80vh;" class="carousel-indicators" id="hero-carousel-indicators"><li data-target="#heroCarousel" data-slide-to="0" class="active"></li><li data-target="#heroCarousel" data-slide-to="1" class=""></li><li data-target="#heroCarousel" data-slide-to="2" class=""></li></ol>
 
         <div class="carousel-inner" role="listbox" style="height: 80vh;">
-
-          <!-- Slide 1 -->
-          <div  class="carousel-item carousel-item-next carousel-item-left" style="background-image: url('homeResources/assets/img/chanakya-crousal/IMG-20200101-WA0043.jpg');height: 80vh;">
-            <div class="carousel-container">
-              <div class="carousel-content container">
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div  class="carousel-item" style="background-image: url('homeResources/assets/img/chanakya-crousal/IMG-20200101-WA0083.jpg');height: 80vh;">
-            <div class="carousel-container">
-              <div class="carousel-content container">
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div  class="carousel-item active carousel-item-left" style="background-image: url('homeResources/assets/img/chanakya-crousal/IMG-20200101-WA0089.jpg');height: 80vh;">
-            <div class="carousel-container">
-              <div class="carousel-content container">
-
-              </div>
-            </div>
-          </div>
-
+        
+        <c:forEach var="image" items="${images}" varStatus="index">
+	         <div  class="carousel-item  
+	         <c:if test="${index.count eq 1 }"> active </c:if> 
+	         <c:if test="${index.last or index.count eq 1 }"> carousel-item-next carousel-item-left</c:if>" 
+	         style="background-image: url('${pageContext.request.contextPath}${image.url}');height: 80vh; background-size: 100% 100%;">
+	            <div class="carousel-container">
+	              <div class="carousel-content container">
+	
+	              </div>
+	            </div>
+	          </div> 
+		</c:forEach>
         </div>
 
         <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
@@ -195,7 +180,7 @@
     </section><!-- End Counts Section -->
     
     <!-- ======= Trainers Section ======= -->
-    <section id="trainers" class="trainers">
+    <!-- <section id="trainers" class="trainers">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -264,7 +249,7 @@
         </div>
 
       </div>
-    </section><!-- End Trainers Section -->
+    </section> --><!-- End Trainers Section -->
 
     <!-- ======= Contact Us Section ======= -->
     <section id="contact" class="contact">

@@ -9,9 +9,12 @@
     margin-top : 10px;
     padding-left: 5px;
 }
+.row{
+	display: block !important; 
+}
 </style>
+<link href="${pageContext.request.contextPath}/homeResources/css/countdown.css" rel="stylesheet">
 <body>
- <link href="${pageContext.request.contextPath}/homeResources/css/countdown.css" rel="stylesheet">
 
 <%@ include file="navigation.jsp"%>
 
@@ -35,19 +38,26 @@
         <div class="row mt-">
           <form action="${pageContext.request.contextPath}/online-test-submit" method="POST" id="onlineTestForm">
                 <input type="hidden" value="${onlineTest.onlineTestId}" name="testId"/>
-                <c:forEach var="question" items="${onlineTest.getSortedQuestions()}"  varStatus="loop">
-                     <div  class="question" >
-                            <div class="question-details" >
-                                 <b>${loop.index+1}. ${question.description}</b>
-                            </div>
-                         <c:forEach var="answers" items="${question.getSortedAnswers()}"  varStatus="loop">
-                             <div class="answer-description">
-                                   <input type="radio" name="${question.questionId}" value="${answers.optionNumber}">
-                                   <label for="${question.questionId}">${answers.description}</label><br>
-                             </div>
-                       </c:forEach>
-                     </div>
-               </c:forEach>
+                	<div class="all-questions">
+		                <c:forEach var="question" items="${onlineTest.getSortedQuestions()}"  varStatus="loop">
+		                     <div  class="question${loop.index+1} question" >
+		                            <div class="question-details" >
+		                                 <b>${loop.index+1}. </b>${question.description}
+		                            </div>
+		                         <c:forEach var="answers" items="${question.getSortedAnswers()}"  varStatus="loop">
+		                             <div class="answer-description">
+		                                   <input type="radio" name="${question.questionId}" value="${answers.optionNumber}">
+		                                   <label for="${question.questionId}">${answers.description}</label><br>
+		                             </div>
+		                         </c:forEach>
+		                     </div>
+		               </c:forEach>
+	               </div>
+	               <!-- <a id="next" style="float: right;">next</a> -->
+	               <br>
+	                <button  id="next" class="" style="float: right; border-radius: 50px; border: 0; background: #5fcf80; ">Next</button>
+	                <button  id="prev" class="" style="background: #5fcf80; border-radius: 50px; border: 0;">PREV</button>
+				   <!-- <a id="prev">prev</a> -->
                <div class="contact">
                  <div class="php-email-form text-center">
                    <button type="submit" id="onlineTestSubmit" value="Submit Test">Submit Test</button>
@@ -61,6 +71,10 @@
   </main>
 
 <%@ include file="footer.jsp"%>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" /> -->
+
 <script src="${pageContext.request.contextPath}/homeResources/js/jquery.countdown.js"></script>
 <script>
 $('.get-started-btn').countdown({
@@ -75,6 +89,40 @@ $('.get-started-btn').countdown({
         }).on("click", function() {
           $(this).removeClass('ended').data('countdown').update(+(new Date) + ${onlineTest.second}*10000*60).start();
     });
+    
+$(document).ready(function(){
+    $(".all-questions .question").each(function(e) {
+        if (e != 0)
+            $(this).hide();
+    });
+    
+    $("#next").click(function(){
+    	$('html, body').animate({
+            scrollTop: parseInt($('#main').offset().top)
+        }, 1000);
+        if ($(".all-questions  .question:visible").next().length != 0)
+            $(".all-questions .question:visible").next().show().prev().hide();
+        else {
+            $(".all-questions .question:visible").hide();
+            $(".all-questions .question:first").show();
+        }
+        return false;
+    });
+
+    $("#prev").click(function(){
+    	$('html, body').animate({
+            scrollTop: parseInt($('#main').offset().top)
+        }, 1000);
+        if ($(".all-questions .question:visible").prev().length != 0)
+            $(".all-questions .question:visible").prev().show().next().hide();
+        else {
+            $(".all-questions .question:visible").hide();
+            $(".all-questions .question:last").show();
+        }
+        return false;
+    });
+});
+    
 </script>
 </body>
 </html>

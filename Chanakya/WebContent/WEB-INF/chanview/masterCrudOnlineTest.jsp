@@ -37,10 +37,10 @@
     background: rgba(255, 255, 255, 0.94);
     border: 0;
 	}
-	.jtable-command-button {
+	/*  .jtable-command-button {
 		display: none !important;
-	}
-	.jtable-toolbar-item-text {
+	}   */
+	.jtable-edit-command-button {
 		display: none !important;
 	}
 	.btn:hover{

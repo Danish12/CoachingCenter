@@ -10,24 +10,11 @@
 <script src="mainResources/js/jtable.js" type="text/javascript"></script>
 <link href="mainResources/css/blue/jtable.css" rel="stylesheet" type="text/css">
 
-	
 <body>
 	<%@ include file="navigation.jsp"%>
 	
 	<main id="main" style="padding-top: 6%;">
 		<div class="row1" style="width: 95%;display: flex;">
-			<!-- <div class="col s3">
-				<input type="text" class="form-control" name="title" id="title" placeholder="Blog Title"/>
-			</div>
-			<div class="col s3">
-				<input type="text" class="form-control" id="blogType" name="blogType" placeholder="Blog Type"/>
-			</div>
-			<div class="col s3">
-				<input type="text" class="form-control" id="bloggerUrl"  name="bloggerUrl" placeholder="Blogger Url"/>
-			</div>
-			<div class="col s3">
-				<input type="button" name="search" title="Search" value="Search" id="search" class="btn addBtnColor" style="background-color: #5fcf80;"/>
-			</div> -->
 			<div class="col s3">
 				<a class="btn addBtnColor" href="addBlog" style="color: white;background-color: #5fcf80"><i class="fa fa-plus"></i>&nbsp; Add Article</a>
 			</div>
@@ -74,7 +61,8 @@
 	        sorting: true, //Enable sorting
 	        defaultSorting: 'Name ASC', //Set default sorting
 	        actions: {
-	            listAction: 'listBlog'
+	            listAction: 'listBlog',
+	            deleteAction: 'deleteBlog'
 	        },
 	        fields: {
 	        	blogId: {
@@ -104,6 +92,9 @@
 	            
 	            button : {
 	            	title : 'Action'
+	            },
+	            button : {
+	            	title : 'Delete'
 	            }
 	        },
 	        recordAdded : function(event, data){

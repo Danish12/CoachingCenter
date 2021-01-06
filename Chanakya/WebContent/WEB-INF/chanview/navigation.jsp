@@ -18,6 +18,7 @@
 	              <li><a href="${pageContext.request.contextPath}/videos">Videos</a></li>
 	              <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
 	              <li><a href="${pageContext.request.contextPath}/testList">Online Test</a></li>
+	              <li><a href="${pageContext.request.contextPath}/images">Images</a></li>
 	            </ul>
 	          </li>
           </c:if>

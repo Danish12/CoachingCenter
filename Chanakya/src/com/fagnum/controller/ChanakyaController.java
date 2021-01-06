@@ -33,12 +33,14 @@ import com.fagnum.services.model.Blog;
 import com.fagnum.services.model.Blogger;
 import com.fagnum.services.model.ByAndTimeStamp;
 import com.fagnum.services.model.Enquiry;
+import com.fagnum.services.model.Images;
 import com.fagnum.services.model.SpringUser;
 import com.fagnum.services.model.Subject;
 import com.fagnum.services.model.User;
 import com.fagnum.services.service.BlogService;
 import com.fagnum.services.service.BloggerService;
 import com.fagnum.services.service.EnquiryService;
+import com.fagnum.services.service.ImageService;
 import com.fagnum.services.service.SubjectService;
 import com.fagnum.services.util.Constants;
 
@@ -49,6 +51,7 @@ public class ChanakyaController extends BaseAppController{
 	BloggerService bloggerService = AppController.getBloggerService();
 	EnquiryService enquiryService = AppController.getEnquiryService();
 	SubjectService subjectService = AppController.getSubjectService();
+	ImageService imageService = AppController.getImageService();
 
 	@RequestMapping("/blocked")
 	public String blocked(HttpServletRequest request) {
@@ -74,6 +77,9 @@ public class ChanakyaController extends BaseAppController{
 		if (currentUser != null) {
 			request.getSession().setAttribute("user", currentUser);
 		}
+		List<Images> images = imageService.findByImage("HOME_SLIDER");
+		request.setAttribute("images", images);
+		
 		Subject currentAffair = subjectService.findSubject("CURRENT_AFFAIRS") ;
 		Subject noticeBoard = subjectService.findSubject("NOTICE") ;
 		List<Blog> currentAffairs  = blogService.findBySubject(currentAffair.getSubjectId(), "0", "5");

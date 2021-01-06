@@ -36,7 +36,7 @@ public class OnlineTestController extends BaseAppController {
 
 	@RequestMapping("/online-test")
 	public String onlineTest(HttpServletRequest request) {
-
+ 
 		//request.setAttribute("videos", videoService.getAllList(Video.class));
 		request.setAttribute("courses", courseService.getAllList(Course.class));
 
@@ -233,5 +233,17 @@ public class OnlineTestController extends BaseAppController {
 	/*************************
 	 * Online Test Crud END
 	 ********************************************/
+	@RequestMapping(value = "/deleteOnlineTest", method = RequestMethod.POST)
+	public @ResponseBody String deleteOnlineTest(HttpServletRequest request) {
+		JSONObject jsonObject = new JSONObject();
+
+		String onlineTestId = request.getParameter("OnlineTestId");
+		if (!onlineTestId.isEmpty()) {
+			OnlineTest onlineTest = onlineTestService.read(OnlineTest.class, onlineTestId);
+			onlineTestService.delete(onlineTest);
+		}
+		jsonObject.put("Result", "OK");
+		return jsonObject.toString();
+	}
 
 }

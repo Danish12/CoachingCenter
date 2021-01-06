@@ -14,6 +14,7 @@ import com.fagnum.services.service.DocumentMediaService;
 import com.fagnum.services.service.EnquiryService;
 import com.fagnum.services.service.FacebookService;
 import com.fagnum.services.service.GenreService;
+import com.fagnum.services.service.ImageService;
 import com.fagnum.services.service.LeaderboardService;
 import com.fagnum.services.service.NewsletterService;
 import com.fagnum.services.service.OnlineTestService;
@@ -46,7 +47,15 @@ public class AppController {
 	private static AnswerService answerService;
 	private static QuestionService questionService;
 	private static VideoService videoService;
+	private static ImageService imageService;
 
+	public static ImageService getImageService() {
+		if (imageService == null) {
+			imageService = (ImageService) appContext.getBean("imageService");
+		}
+		return imageService;
+	}
+	
 	public static VideoService getVideoService() {
 		if (videoService == null) {
 			videoService = (VideoService) appContext.getBean("videoService");

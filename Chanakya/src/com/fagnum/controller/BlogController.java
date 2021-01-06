@@ -353,9 +353,6 @@ public class BlogController extends BaseAppController{
 		});
 		if (dir.listFiles() != null) {
 			for (File imgFile : dir.listFiles()) {
-				// BasicFileAttributes attr =
-				// Files.readAttributes(imgFile.toPath(),
-				// BasicFileAttributes.class);
 				javaxt.io.File file = new javaxt.io.File(imgFile);
 				map.put(file.getCreationTime(), resource.getString("siteUrl") + "blogImage?" + imgFile.getName());
 			}
@@ -424,8 +421,20 @@ public class BlogController extends BaseAppController{
 		}
 		jsonObject.put("Records", list);
 		jsonObject.put("Result", "OK");
-		// jsonObject.put("TotalRecordCount",
-		// blogService.getTableRowCount(Blog.class));
 		return jsonObject.toString();
 	}
+	
+	@RequestMapping(value = "/deleteBlog", method = RequestMethod.POST)
+	public @ResponseBody String deleteBlog(HttpServletRequest request) {
+		JSONObject jsonObject = new JSONObject();
+
+		String blogId = request.getParameter("blogId");
+		if (!blogId.isEmpty()) {
+			Blog blog = blogService.read(Blog.class, blogId);
+				blogService.delete(blog);
+		}
+		jsonObject.put("Result", "OK");
+		return jsonObject.toString();
+	}
+	
 }
