@@ -252,7 +252,6 @@ public class ChanakyaController extends BaseAppController{
 		return "blog";
 	}
 
-	@SuppressWarnings("unused")
 	@RequestMapping(value = "/sendEnquiry", method = RequestMethod.POST)
 	public @ResponseBody String sendEnquiry(HttpServletRequest request, Principal principal)
 			throws NoSuchAlgorithmException {

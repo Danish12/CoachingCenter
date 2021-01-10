@@ -14,7 +14,8 @@ import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 
-	public void sendMail(String emailTo, String subject, String messageStr) throws UnsupportedEncodingException, MessagingException {
+	public void sendMail(String emailTo, String subject, String messageStr)
+			throws UnsupportedEncodingException, MessagingException {
 
 		ResourceBundle resource = ResourceBundle.getBundle("application");
 
@@ -49,10 +50,4 @@ public class SendMail {
 
 	}
 
-	/*
-	 * public static void main(String[] args) { try { new
-	 * SendMail().sendMail("mohddanish27744@gmail.com", "DANIS",
-	 * "DANISH IS SENDING YOU A MAIL"); } catch (UnsupportedEncodingException |
-	 * MessagingException e) { e.printStackTrace(); } }
-	 */
 }
