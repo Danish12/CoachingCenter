@@ -19,34 +19,32 @@ public class SendMail {
 
 		ResourceBundle resource = ResourceBundle.getBundle("application");
 
-		if ("isProd".equals(resource.getString("isProd"))) {
-			final String username = "care@fagnum.com";
-			final String password = "InfoFagnum";
+		final String username = "omchanakyadhampur@gmail.com";
+		final String password = "OmChanakya@123";
 
-			Properties props = new Properties();
+		Properties props = new Properties();
 
-			String host = resource.getString("host");
-			props.put("mail.host", host);
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", resource.getString("port"));
-			props.put("mail.transport.protocol", "smtp");
-			props.put("mail.smtp.starttls.enable", "true");
+		String host = resource.getString("host");
+		props.put("mail.host", host);
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", resource.getString("port"));
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.starttls.enable", "true");
 
-			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password);
-				}
-			});
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
 
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(username, resource.getString("name")));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
-			message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse("care@fagnum.com"));
-			message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse("mohdwasi2903@gmail.com"));
-			message.setSubject(subject);
-			message.setContent(messageStr, "text/html; charset=utf-8");
-			Transport.send(message);
-		}
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(username, resource.getString("name")));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse("care@fagnum.com"));
+		message.addRecipients(Message.RecipientType.BCC, InternetAddress.parse("mohdwasi2903@gmail.com"));
+		message.setSubject(subject);
+		message.setContent(messageStr, "text/html; charset=utf-8");
+		Transport.send(message);
 
 	}
 
