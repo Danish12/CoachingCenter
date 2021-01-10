@@ -143,11 +143,11 @@
 	                edit: false,
 	                list: false,
 	                title: 'Images Id',
-	            },
+	            }/*,
 	            name: {
 	                title: 'description',
 	                width: '5%',
-	            }/*,
+	            },
 	            price: {
 	                title: 'Price',
 	                width: '10%',
@@ -161,7 +161,7 @@
 	                width: '20%',
 	                display: function (data) {
 	                	console.log(data);
-	                    return '<img src=${pageContext.request.contextPath}/' + data.record.url + ' style="width:60%;"/>';
+	                    return '<img src=${pageContext.request.contextPath}' + data.record.url + ' style="width:60%;"/>';
 	               }
 	            },
 	            
