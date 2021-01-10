@@ -19,6 +19,7 @@
 	              <li><a href="${pageContext.request.contextPath}/users">Users</a></li>
 	              <li><a href="${pageContext.request.contextPath}/testList">Online Test</a></li>
 	              <li><a href="${pageContext.request.contextPath}/images">Images</a></li>
+	              <li><a href="${pageContext.request.contextPath}/enquiry">Enquiry</a></li>
 	            </ul>
 	          </li>
           </c:if>

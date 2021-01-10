@@ -267,7 +267,7 @@ public class ChanakyaController extends BaseAppController{
 		enquiry.setName(name);
 		enquiry.setEmailId(emailId);
 		enquiry.setContactNumber(contactNumber);
-		//enquiry.setDate(new java.sql.Date(new java.util.Date().getTime()));
+		enquiry.setDate(new java.sql.Date(new java.util.Date().getTime()));
 
 		ByAndTimeStamp byAndTimeStamp = new ByAndTimeStamp();
 		byAndTimeStamp.setCreatedBy(emailId);
@@ -287,7 +287,7 @@ public class ChanakyaController extends BaseAppController{
 					+ "<br><br>Regards," + "<br>Team " + resource.getString("name") + "<br>" + "Email:"
 					+ resource.getString("care") + "<br>" + "</body></html>";
 			MailThread send = new MailThread("care@fagnum.com", subject, emailMessage);
-			send.start();
+			//send.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 			jsonObject.put("status", false);

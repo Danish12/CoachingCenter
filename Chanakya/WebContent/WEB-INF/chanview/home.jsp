@@ -285,7 +285,7 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form method="post" role="form" class="php-email-form" id="contactFormId">
+            <form method="post" role="form" class="php-email-form" id="contactFormId" action="sendEnquiry">
               <div class="form-row">
                 <div class="col-md-12 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
@@ -331,8 +331,8 @@ $('#contactFormId').submit(function(e) {
           type: 'POST',
           data : {
             name : $('#name').val(),
-            name : $('#emailId').val(),
-            name : $('#contactNumber').val()
+            emailId : $('#emailId').val(),
+            contactNumber : $('#contactNumber').val()
           },
           success: function(json){
             $('.sent-message').show();
