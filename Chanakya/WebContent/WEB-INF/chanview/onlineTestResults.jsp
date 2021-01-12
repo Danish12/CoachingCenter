@@ -38,7 +38,7 @@
               <c:set var="questionsMap" value="${onlineTest.getQuestionMap()}" />
               <c:forEach var="onlineTestResponse" items="${onlineTestUserResponses}"  varStatus="loop">
                   <div class="solution" >
-                     <c:set var="question" value="${questionsMap[onlineTestResponse.questionId]}"/>
+                     <c:set var="question" value="${questionsMap[onlineTestResponse.date]}"/> 
                      <div class="solution-details" >
                         <div>Question - ${question.description}</div>
                         <div>Correct Answer - ${question.correctAnswer}</div>

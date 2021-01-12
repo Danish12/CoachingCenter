@@ -51,7 +51,7 @@ public class OnlineTestController extends BaseAppController {
 		if (null == onlineTest) {
 			return "errorPage";
 		}
-		Set<Question> questions = onlineTest.getQuestions();
+		List<Question> questions = onlineTest.getSortedQuestions();
 		int correctCount = 0;
 		List<OnlineTestUserResponse> onlineTestUserResponses = new ArrayList<OnlineTestUserResponse>();
 		for(Question question : questions){
@@ -61,7 +61,9 @@ public class OnlineTestController extends BaseAppController {
 				isCorrect = true;
 				correctCount++;
 			}
-			onlineTestUserResponses.add(new OnlineTestUserResponse(question.getQuestionId(), isCorrect, response, question.getSubjects()));
+			
+			onlineTestUserResponses.add(new OnlineTestUserResponse(question.getQuestionId(), 
+					isCorrect, response, question.getSubjects(), new java.sql.Date(question.getByAndTimeStamp().getCreatedTs().getTime())));
 		}
 		request.setAttribute("onlineTest", onlineTest);
 

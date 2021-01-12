@@ -127,7 +127,7 @@ public class OnlineTest {
 		Collections.sort(listQuestions, new Comparator<Question>() {
 			@Override
 			public int compare(Question question, Question question2) {
-				return question2.getByAndTimeStamp().getCreatedTs().compareTo(question.getByAndTimeStamp().getCreatedTs());
+				return question.getByAndTimeStamp().getCreatedTs().compareTo(question2.getByAndTimeStamp().getCreatedTs());
 			}
 		});
 
@@ -150,10 +150,16 @@ public class OnlineTest {
 		this.status = status;
 	}
 
-	public Map<String, Question> getQuestionMap(){
-		Map<String, Question> questionsMap = new HashMap<>();
- 		for(Question question : this.getQuestions()){
-			questionsMap.put(question.getQuestionId(), question);
+	public Map<Date, Question> getQuestionMap(){
+		Map<Date, Question> questionsMap = new TreeMap<>(new Comparator<Date>() {
+
+			@Override
+			public int compare(Date o1, Date o2) {
+				return o1.compareTo(o2);
+			}
+		});
+ 		for(Question question : this.getSortedQuestions()){
+			questionsMap.put(question.getByAndTimeStamp().getCreatedTs(), question);
 		}
  		return questionsMap;
 	}

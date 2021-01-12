@@ -9,7 +9,7 @@
     margin-top : 10px;
     padding-left: 5px;
 }
-.row{
+.row-question{
 	display: block !important; 
 }
 </style>
@@ -35,7 +35,7 @@
     
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
-        <div class="row mt-">
+        <div class="row-question mt-">
           <form action="${pageContext.request.contextPath}/online-test-submit" method="POST" id="onlineTestForm">
                 <input type="hidden" value="${onlineTest.onlineTestId}" name="testId"/>
                 	<div class="all-questions">
@@ -80,7 +80,8 @@
 $('.get-started-btn').countdown({
           date: +(new Date) + ${onlineTest.second}*1000,
           render: function(data) {
-            $(this.el).text( this.leadingZeros(data.min, 2) + "min "+ this.leadingZeros(data.sec, 2) + " sec");
+        	  console.log(data);
+            $(this.el).text( this.leadingZeros(data.hours, 2) + " Hour "+this.leadingZeros(data.min, 2) + "min "+ this.leadingZeros(data.sec, 2) + " sec");
           },
           onEnd: function() {
             $(this.el).addClass('ended');

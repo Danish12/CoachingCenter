@@ -1,22 +1,32 @@
 package com.fagnum.services.model;
 
-import java.util.List;
+import java.sql.Date;
 import java.util.Set;
 
 public class OnlineTestUserResponse {
 
-    public OnlineTestUserResponse(String questionId, boolean isCorrect, String optionChoosen, Set<Subject> subjects) {
+    public OnlineTestUserResponse(String questionId, boolean isCorrect, String optionChoosen, Set<Subject> subjects, Date date) {
         this.questionId = questionId;
         this.isCorrect = isCorrect;
         this.optionChoosen = optionChoosen;
+        this.date = date;
     }
 
+    Date date;
     String questionId;
     boolean isCorrect;
     String optionChoosen;
     Set<Subject> subject;
+    
+    public Date getDate() {
+		return date;
+	}
 
-    public Set<Subject> getSubject() {
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Set<Subject> getSubject() {
         return subject;
     }
 
@@ -47,13 +57,12 @@ public class OnlineTestUserResponse {
     public void setOptionChoosen(String optionChoosen) {
         this.optionChoosen = optionChoosen;
     }
+    
 
     @Override
-    public String toString() {
-        return "OnlineTestUserResponse{" +
-                "questionId='" + questionId + '\'' +
-                ", isCorrect=" + isCorrect +
-                ", optionChoosen=" + optionChoosen +
-                '}';
-    }
+	public String toString() {
+		return "OnlineTestUserResponse [date=" + date + ", questionId=" + questionId + ", isCorrect=" + isCorrect
+				+ ", optionChoosen=" + optionChoosen + ", subject=" + subject + "]";
+	}
+
 }

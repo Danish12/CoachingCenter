@@ -9,8 +9,15 @@
 	<id>Chanakya</id>
 
 	<classpath>
-		<dir name="/media/danish/New Volume/Dev/workspace/GIT/Chanakya/target/classes">
+		<dir name="G:/Dev/workspace/GIT/Chanakya/target/classes">
 		</dir>
 	</classpath>
-
+	<web>
+    <link target="/">
+      <dir name="G:/Dev/workspace/GIT/Chanakya/WebContent/"/>
+    </link> 
+    <link target="/jsps/">
+      <dir name="G:/Dev/workspace/GIT/Chanakya/WebContent/WEB-INF/"/>
+    </link>
+  </web>
 </application>
