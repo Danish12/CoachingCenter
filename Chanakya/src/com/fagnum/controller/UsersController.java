@@ -30,7 +30,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.fagnum.services.model.ByAndTimeStamp;
+import com.fagnum.services.model.Course;
 import com.fagnum.services.model.User;
+import com.fagnum.services.service.CourseService;
 import com.fagnum.services.service.UserService;
 import com.fagnum.services.util.Constants;
 import com.fagnum.services.util.EncryptedPasswordGenerator;
@@ -281,7 +283,8 @@ public class UsersController {
 	}
 
 	@RequestMapping("/users")
-	public String user(Model model,Map<String, Object> map) {
+	public String user(HttpServletRequest request) {
+		request.setAttribute("courses", courseService.getAllList(Course.class));
 		return "masterCrudUsers";
 	}
 
@@ -296,4 +299,7 @@ public class UsersController {
 		jsonObject.put("TotalRecordCount", userService.getTableRowCount(User.class));
 		return jsonObject.toString();
 	}
+	
+	CourseService courseService = AppController.getCourseService();
+	
 }

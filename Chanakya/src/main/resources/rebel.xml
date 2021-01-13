@@ -13,11 +13,14 @@
 		</dir>
 	</classpath>
 	<web>
-    <link target="/">
-      <dir name="G:/Dev/workspace/GIT/Chanakya/WebContent/"/>
-    </link> 
-    <link target="/jsps/">
-      <dir name="G:/Dev/workspace/GIT/Chanakya/WebContent/WEB-INF/"/>
-    </link>
-  </web>
+		<link target="/">
+			<dir name="G:/Dev/workspace/GIT/Chanakya/target/m2e-wtp/web-resources">
+				<exclude name="/"/>
+			</dir>
+		</link>
+		<link target="/">
+			<dir name="G:/Dev/workspace/GIT/Chanakya/WebContent">
+			</dir>
+		</link>
+	</web>
 </application>
