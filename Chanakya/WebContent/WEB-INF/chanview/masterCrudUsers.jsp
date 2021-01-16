@@ -70,7 +70,7 @@
 					</div>
 					<div class="row1">
 						<div class="col s12">
-							<div class="searchResult" id="listVideoContainer">
+							<div class="searchResult" id="listUserContainer">
 							</div>
 						</div>
 					</div>
@@ -110,6 +110,12 @@
 							<input type="text" class="form-control input-sm" name="mobile" id="mobile" placeholder="mobile">
 						</div>
 					</div>
+					<div class="input-field col s12 m6">
+						<div class="form-group">
+							<label for="name">Password</label>
+							<input type="text" class="form-control input-sm" name="password" id="password" placeholder="password">
+						</div>
+					</div>
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
@@ -125,23 +131,23 @@
 					<div class="input-field col s12 m6">
 						<div class="form-group">
 							<label for="name">Subscription Start Date</label>
-							<input type="text" class="form-control input-sm" name="startDate" id="startDate" placeholder="startDate">
+							<input type="text" class="form-control input-sm datepicker" data-date-format="dd/mm/yyyy" name="startDate" id="startDate" placeholder="startDate">
 						</div>
 					</div>
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
 							<label for="name">Subscription End Date</label>
-							<input type="text" class="form-control input-sm" name="endDate" id="endDate" placeholder="endDate">
+							<input type="text" class="form-control input-sm datepicker" name="endDate" data-date-format="dd/mm/yyyy" id="endDate" placeholder="endDate">
 						</div>
 					</div>
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
-		      				<label for="url">Prime/Public</label>      
-		      				<select class="form-control input-sm m-select" name="isPrime" id="isPrime" >
-									<option value="true">PRIME</option>
-									<option value="false">PUBLIC</option>
+		      				<label for="url">STATUS</label>      
+		      				<select class="form-control input-sm m-select" name="status" id="status" >
+									<option value="true">ENABLED</option>
+									<option value="false">DISABLED</option>
 							</select>
 		      			</div>
 		      		</div>					
@@ -149,8 +155,8 @@
 				<div class="row1 center">
 					<div class="col s12">
 						<br>
-						<input type="hidden" id="action"><input type="hidden" id="VideoId" name="VideoId">
-						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateVideoDetail()">
+						<input type="hidden" id="action"><input type="hidden" id="UserId" name="UserId">
+						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateUserDetail()">
 							<i class="fa fa-plus"></i>&nbsp; Update Details
 						</a>
 			           	<a class="btn cancelBtnColor" href="#" style="color: white;background-color: #e60d53" onclick="$('#searchModal').closeModal();">
@@ -178,20 +184,20 @@
 	$("#action").val('add');
 	
 	$(document).ready(function () {
-	    $('#listVideoContainer').jtable({
+	    $('#listUserContainer').jtable({
 	        title: 'Course List',
 	        paging: true, //Enable paging
 	        pageSize: 10, //Set page size (default: 10)
 	        sorting: true, //Enable sorting
 	        defaultSorting: 'Name ASC', //Set default sorting
 	        actions: {
-	        	createAction : 'addUpdateVideo',
+	        	createAction : 'addUpdateUser',
 	            listAction: 'listUser',
 	            deleteAction: 'deleteVideo',
-	            updateAction: 'addUpdateVideo'
+	            updateAction: 'addUpdateUser'
 	        },
 	        fields: {
-	        	VideoId: {
+	        	UserId: {
 	                key: true,
 	                create: false,
 	                edit: false,
@@ -202,31 +208,27 @@
 	                title: 'Name',
 	                width: '20%',
 	            },
-	            courses: {
-	                title: 'Courses',
+	            emailAddress: {
+	                title: 'Email Id',
 	                width: '20%',
 	            },
-	            selectedCourses: {
-	                title: 'selectedCourses',
+	            mobile: {
+	                title: 'Contact',
+	                width: '10%'
+	            },
+	            password: {
+	                title: 'Password',
 	                width: '10%',
-	                visibility: 'hidden'
+	                visibility: 'hidden',
 	            },
-	            subjects: {
-	                title: 'Subjects',
-	                width: '30%',
+	            startDate : {
+	            	title : "Start Date"
 	            },
-	            selectedSubjects: {
-	                title: 'selectedSubjects',
-	                width: '60%',
-	                visibility: 'hidden'
+	            endDate : {
+	            	title : "End Date"
 	            },
-	            videoLocation : {
-	            	  title: 'selectedSubjects',
-		                width: '60%',
-		                visibility: 'hidden'
-	            },
-	            isPrime: {
-	                title: 'Is Prime',
+	            status: {
+	                title: 'Status',
 	                width: '10%',
 	            },
 	            
@@ -240,27 +242,29 @@
 	        } 
 	    });
 	    //Load Course list from server
-	    $('#listVideoContainer').jtable('load', function(){
+	    $('#listUserContainer').jtable('load', function(){
 	    	$(".jtable-toolbar-item-add-record").hide();	
 	    });
 	    
 	});
 	
-	function updateVideoDetail() {
+	function updateUserDetail() {
 		$("#errorMessage").text("");
 		if(document.getElementById("action").value.match("add")) {
-			$('#listVideoContainer').jtable('addRecord', {
+			$('#listUserContainer').jtable('addRecord', {
 			    record: {
 			    	name:$("#name").val(),
 			    	status:$("#status").val(),
 			    	action:'ADD',
 			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
-			    	subjects:$("#subjects").val()
+			    	mobile:$("#mobile").val(),
+			    	startDate:$("#startDate").val(),
+			    	endDate:$("#endDate").val(),
+			    	password:$("#password").val(),
+			    	emailAddress:$("#emailAddress").val()
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listUserContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -273,20 +277,22 @@
 			});
 		}
 		if(document.getElementById("action").value.match("update")) {
-			$('#listVideoContainer').jtable('updateRecord', {
+			$('#listUserContainer').jtable('updateRecord', {
 			    record: {
-			    	VideoId:$("#VideoId").val(),
+			    	UserId:$("#UserId").val(),
 			    	action:'update',
 			    	name:$("#name").val(),
 			    	status:$("#status").val(),
 			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
-			    	subjects:$("#subjects").val()
+			    	mobile:$("#mobile").val(),
+			    	startDate:$("#startDate").val(),
+			    	endDate:$("#endDate").val(),
+			    	emailAddress:$("#emailAddress").val(),
+			    	password:$("#password").val(),
 			    	
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listUserContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -301,39 +307,47 @@
 	}
 
 	
-	function loadVideoDetail(VideoId) {
+	function loadUserDetails(UserId) {
 		
 		$.ajax({
-			  url: "loadVideoDetails",
+			  url: "loadUserDetails",
 			  type: 'GET',
 			  dataType: 'json', 
-			  data : {videoId : VideoId},
+			  data : {UserId : UserId},
 			  success: function(json){
-					$("#VideoId").val(json.VideoId);
+					$("#UserId").val(json.UserId);
 					$("#name").val(json.name);
-					$("#subjects").val(json.subjectIds.split(","));
+					$("#mobile").val(json.mobile);
+					$("#emailAddress").val(json.emailAddress);
 					$("#courses").val(json.courseIds.split(","));
 					$('#videoLocation').val(json.videoLocation);
+					$('#startDate').val(json.startDate);
+					$('#endDate').val(json.endDate);
+					$('#password').val(json.password);
 					$('select').select2();
 					$("#action").val('update');
 					$('#searchModal').openModal();
 			  }
 		});
-		
-		
 	}
+	
+	$('.datepicker').datepicker({
+		dateFormat: 'dd-mm-yy'
+	});
 	
 	function blankUpdateForm() {
 		$('#searchModal').openModal();
-		$("#onlineTestId").val('');
+		$("#UserId").val('');
     	$("#name").val('');
         $("#action").val('add');
-        $("#instruction").val('');
-        $("#subjects").val('');
+        $("#mobile").val('');
+        $("#password").val('');
+        $("#startDate").val('');
+        $("#endDate").val('');
         $("#courses").val('');
         $("#errorMessage").text("");
         $('select').select2();
-    	$('#videoLocation').val("");
+    	$('#emailAddress').val("");
 	}
 	
 </script>

@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -246,40 +248,50 @@ public class UsersController {
 		return JSONValue.toJSONString(array);
 	}
 	
-	@RequestMapping(value = "/saveUserProfile", method = RequestMethod.POST)
-	public @ResponseBody String saveUserProfile(HttpServletRequest request, Principal principal) {
-		JSONArray array = new JSONArray();
+	@RequestMapping(value = "/addUpdateUser", method = RequestMethod.POST)
+	public @ResponseBody String addUpdateUser(HttpServletRequest request, Principal principal) {
 		JSONObject object = new JSONObject();
 		try {
+			
+			DateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+			String userId = request.getParameter("UserId");
 			String name = request.getParameter("name");
-			String mobileNumber = request.getParameter("mobileNumber");
-			String emailId = request.getParameter("emailId");
-			User user = userService.getEntityByEmailId(User.class, principal.getName());
-			if(name != null && !name.equals("")) {
-				user.setName(name);
+			String mobileNumber = request.getParameter("mobile");
+			String emailId = request.getParameter("emailAddress");
+			String subscriptionStartDate = request.getParameter("startDate");
+			String subscriptionEndDate = request.getParameter("endDate");
+			String status = request.getParameter("status");
+			String password = request.getParameter("password");
+			String courses = request.getParameter("courses[]");
+
+			User user = new User();
+			if(null != userId){
+				user = userService.read(User.class, userId);
 			}
-			if(mobileNumber != null && !mobileNumber.equals("")) {
-				user.setContactNumber(mobileNumber);
+			
+			user.setName(name);
+			user.setContactNumber(mobileNumber);
+			user.setEmailId(emailId);
+			user.setStartDate(new java.sql.Date(format.parse(subscriptionStartDate).getTime()));
+			user.setEndDate(new java.sql.Date(format.parse(subscriptionEndDate).getTime()));
+			user.setStatus(status);
+			user.setCourse(courses);
+			user.setPassword(password);
+			
+			if(null != userId){
+				user = userService.update(user);
+			}else{
+				user = userService.save(user);
 			}
-			if(emailId != null && !emailId.equals("")) {
-				user.setEmailId(emailId);
-			}
-			user = userService.update(user);
-			if(user != null) {
-				object.put("status", "true");
-				object.put("message", Constants._PROFILE_SUCCESS);
-			}else {
-				object.put("status", "false");
-				object.put("message", Constants._PROFILE_FAILURE);
-			}
-			array.put(object);
+			
+			object.put("Record", user);
+			object.put("Result", "OK");
 		} catch (Exception e) {
 			e.printStackTrace();
-			object.put("status", "false");
-			object.put("message", Constants._PROFILE_FAILURE);
-			array.put(object);
+			object.put("Result", "Error");
+			object.put("Message", "Unable to add Course please try again." + e.getMessage());
 		}
-		return JSONValue.toJSONString(array);
+		return JSONValue.toJSONString(object);
 	}
 
 	@RequestMapping("/users")
@@ -293,11 +305,24 @@ public class UsersController {
 		JSONObject jsonObject = new JSONObject();
 		String startIndex = request.getParameter("jtStartIndex");
 		String pageSize = request.getParameter("jtPageSize");
-		List<User> list = userService.getList(User.class,startIndex,pageSize);
-		jsonObject.put("Records", list);
+		JSONArray jsonArray = new JSONArray();
+		
+		for (User user : userService.getList(User.class,startIndex,pageSize)) {
+			jsonArray.put(user.toJSON());
+		}
+		jsonObject.put("Records", jsonArray);
+		
 		jsonObject.put("Result","OK"); 
 		jsonObject.put("TotalRecordCount", userService.getTableRowCount(User.class));
 		return jsonObject.toString();
+	}
+	
+	@RequestMapping(value = "/loadUserDetails")
+	public @ResponseBody String loadUserDetails(HttpServletRequest request) {
+
+		String UserId = request.getParameter("UserId");
+		User onlineTest = userService.read(User.class, UserId);
+		return onlineTest.toJSON().toString();
 	}
 	
 	CourseService courseService = AppController.getCourseService();
