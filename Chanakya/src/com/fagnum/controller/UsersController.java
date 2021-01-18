@@ -277,6 +277,7 @@ public class UsersController {
 			user.setStatus(status);
 			user.setCourse(courses);
 			user.setPassword(password);
+			user.setUserType("USER");
 			
 			if(null != userId){
 				user = userService.update(user);
@@ -308,7 +309,9 @@ public class UsersController {
 		JSONArray jsonArray = new JSONArray();
 		
 		for (User user : userService.getList(User.class,startIndex,pageSize)) {
-			jsonArray.put(user.toJSON());
+			if(!"ROLE_SUPER_ADMIN".equals(user.getUserType())){
+				jsonArray.put(user.toJSON());	
+			}
 		}
 		jsonObject.put("Records", jsonArray);
 		
