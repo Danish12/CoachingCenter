@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="header.jsp"%>
+<%@ include file="../header.jsp"%>
 <link href="mainResources/css/font-awesome-4.5.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
 
 <link type="text/css" rel="stylesheet" href="mainResources/css/jquery-ui.min.css"/>
@@ -14,14 +14,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
-<!-- <link rel="stylesheet" href="videoUpload/css/style.css">
-<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<link rel="stylesheet" href="videoUpload/css/jquery.fileupload.css">
-<link rel="stylesheet" href="videoUpload/css/jquery.fileupload-ui.css">
-<noscript><link rel="stylesheet" href="videoUpload/css/jquery.fileupload-noscript.css"></noscript>
-<noscript><link rel="stylesheet" href="videoUpload/css/jquery.fileupload-ui-noscript.css"></noscript> -->
-
+	
 <style>
 	.modal{
     position: fixed;
@@ -44,11 +37,10 @@
     background: rgba(255, 255, 255, 0.94);
     border: 0;
 	}
-
-	.jtable-command-button {
+	/*  .jtable-command-button {
 		display: none !important;
-	}
-	.jtable-toolbar-item-text {
+	}   */
+	.jtable-edit-command-button {
 		display: none !important;
 	}
 	.btn:hover{
@@ -62,24 +54,24 @@
 	}
 </style>
 <body>
-	<%@ include file="navigation.jsp"%>
+	<%@ include file="../navigation.jsp"%>
 	
 	<main id="main" style="padding-top: 6%;">
 	    <br>
 		<div class="row11">
 			<div class="col s12">
-				<div id="courseDiv" class="row1">
+				<div id="onlineTestDiv" class="row1">
 					<div class="row1">
 						<div class="col s6">
-							<h1 style="font-size: 30px"><i class="fa fa-patient-o"> Videos</i></h1>	
+							<h1 style="font-size: 30px"><i class="fa fa-patient-o">Online Test</i></h1>	
 						</div>
 						<div class="col s6" style="padding-top: 30px;">						               
-							<a class="btn right modal-trigger" href="#searchModal" onclick="blankUpdateForm()"><i class="fa fa-plus"></i>&nbsp; Add Videos</a>
+							<a class="btn right modal-trigger" href="#searchModal" onclick="blankUpdateForm()"><i class="fa fa-plus"></i>&nbsp; Add OnlineTest</a>
 						</div>
 					</div>
 					<div class="row1">
 						<div class="col s12">
-							<div class="searchResult" id="listVideoContainer">
+							<div class="searchResult" id="listOnlineTestContainer">
 							</div>
 						</div>
 					</div>
@@ -90,7 +82,7 @@
 			<div class="modal-content">
 				<div class="row1" style="width:90%">
 					<div class="col s12" style="padding: 0 0px;">
-		    			<h4 style="font-size: 30px"><i class="fa fa-shield" style="color: #03a9f4"></i> Video</h4>
+		    			<h4 style="font-size: 30px"><i class="fa fa-shield" style="color: #03a9f4"></i>Online Test</h4>
 		    		</div>
 				</div>
 				<div class="row1 " style="width:90%">
@@ -102,14 +94,23 @@
 						<div class="form-group">
 							<label for="name">Name</label>
 							<input type="text" class="form-control input-sm" name="name" id="name" placeholder="Name">
-							<input type="hidden" class="form-control input-sm" name="courseId" id="courseId" >
+							<input type="hidden" class="form-control input-sm" name="onlineTestId" id="onlineTestId" >
 						</div>
 					</div>
+
+
+					<div class="input-field col s12 m6">
+                    		<div class="form-group">
+                    			<label for="name">Minutes</label>
+                    			<input type="text" class="form-control input-sm" name="second" id="second" placeholder="Number of Minutes allowed to fill in test.">
+                    		</div>
+                    </div>
+
 					
 					<div class="input-field col s12 m6">
 						<div class="form-group">
-							<label for="name">AWS Video URL</label>
-							<input type="text" class="form-control input-sm" name="videoLocation" id="videoLocation" placeholder="videoLocation">
+							<label for="name">instruction</label>
+							<textarea class="form-control input-sm" name="instruction" id="instruction" placeholder="Instructions"></textarea>
 						</div>
 					</div>
 					
@@ -123,17 +124,18 @@
 							</select>   
 						</div>
 		      		</div>
-					<div class="input-field col s12 m6">
+		      		<div class="input-field col s12 m6">
 						<div class="form-group">
-						    	<label for="name">Subjects</label>
-							<select class="form-control input-sm m-select" name="subjects" multiple="multiple" id="subjects" >
-								<c:forEach items="${subjects}" var="subject">
-									<option value="${subject.subjectId}"> ${subject.name}</option>
-								</c:forEach>
-							</select>
+		      				<label  for="genre" >Subject</label> 
+			      			<select class="form-control input-sm m-select" name="subjects" multiple="multiple" id="subjects" >
+										<c:forEach items="${subjects}" var="subject">
+											<option value="${subject.subjectId}"> ${subject.name}</option>
+										</c:forEach>
+							</select>   
 						</div>
-					</div>
-					<div class="input-field col s12 m6">
+		      		</div>
+		      		
+		      		<div class="input-field col s12 m6">
 						<div class="form-group">
 		      				<label for="url">Prime/Public</label>      
 		      				<select class="form-control input-sm m-select" name="isPrime" id="isPrime" >
@@ -141,13 +143,24 @@
 									<option value="false">PUBLIC</option>
 							</select>
 		      			</div>
-		      		</div>					
+		      		</div>
+					
+					<div class="input-field col s12 m6">
+						<div class="form-group">
+							<label for="Status">Status</label>
+							<select class="form-control input-sm m-select" name="status" id="status" >
+								<option value="ACTIVE">ACTIVE</option>
+								<option value="DEACTIVE">DEACTIVE</option>
+							</select>
+						</div>
+					</div>
+					
 				</div>
 				<div class="row1 center">
 					<div class="col s12">
 						<br>
-						<input type="hidden" id="action"><input type="hidden" id="VideoId" name="VideoId">
-						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateVideoDetail()">
+						<input type="hidden" id="action"><input type="hidden" id="onlineTestId">
+						<a class="btn addBtnColor" href="#" style="color: white;background-color: #5fcf80" onclick="updateOnlineTestDetail()">
 							<i class="fa fa-plus"></i>&nbsp; Update Details
 						</a>
 			           	<a class="btn cancelBtnColor" href="#" style="color: white;background-color: #e60d53" onclick="$('#searchModal').closeModal();">
@@ -161,9 +174,8 @@
 		</br>
 	</main>
 <c:set var="excludeBootstrapNjquery" value="true" ></c:set>
-<%@ include file="footer.jsp"%>
+<%@ include file="../footer.jsp"%>
 </body>
-
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -175,89 +187,81 @@
 	$("#action").val('add');
 	
 	$(document).ready(function () {
-	    $('#listVideoContainer').jtable({
-	        title: 'Course List',
+	    $('#listOnlineTestContainer').jtable({
+	        title: 'OnlineTest List',
 	        paging: true, //Enable paging
 	        pageSize: 10, //Set page size (default: 10)
 	        sorting: true, //Enable sorting
 	        defaultSorting: 'Name ASC', //Set default sorting
 	        actions: {
-	        	createAction : 'addUpdateVideo',
-	            listAction: 'listVideo',
-	            deleteAction: 'deleteVideo',
-	            updateAction: 'addUpdateVideo'
+	        	createAction : 'addUpdateOnlineTest',
+	            listAction: 'listOnlineTest',
+	            deleteAction: 'deleteOnlineTest',
+	            updateAction: 'addUpdateOnlineTest'
 	        },
 	        fields: {
-	        	VideoId: {
+	        	OnlineTestId: {
 	                key: true,
 	                create: false,
 	                edit: false,
 	                list: false,
-	                title: 'Video Id',
+	                title: 'OnlineTest Id',
 	            },
 	            name: {
 	                title: 'Name',
-	                width: '20%',
+	                width: '25%',
+	            },
+	            subjects: {
+	                title: 'Subjects',
+	                width: '25%',
 	            },
 	            courses: {
 	                title: 'Courses',
 	                width: '20%',
 	            },
-	            selectedCourses: {
-	                title: 'selectedCourses',
-	                width: '10%',
-	                visibility: 'hidden'
-	            },
-	            subjects: {
-	                title: 'Subjects',
-	                width: '30%',
-	            },
 	            selectedSubjects: {
 	                title: 'selectedSubjects',
-	                width: '60%',
 	                visibility: 'hidden'
 	            },
-	            videoLocation : {
-	            	  title: 'selectedSubjects',
-		                width: '60%',
-		                visibility: 'hidden'
+	            selectedCourses: {
+	                title: 'selectedCourses',
+	                visibility: 'hidden'
 	            },
-	            isPrime: {
-	                title: 'Is Prime',
-	                width: '10%',
+	            status: {
+	                title: 'Status',
 	            },
 	            
 	            action: {
 	                title: 'Action',
-	                width: '10%',
+	                width: '30%',
 	            }
 	        },
 	        recordAdded : function(event, data){
 	        	
 	        } 
 	    });
-	    //Load Course list from server
-	    $('#listVideoContainer').jtable('load', function(){
+	    //Load OnlineTest list from server
+	    $('#listOnlineTestContainer').jtable('load', function(){
 	    	$(".jtable-toolbar-item-add-record").hide();	
 	    });
 	    
 	});
 	
-	function updateVideoDetail() {
+	function updateOnlineTestDetail() {
 		$("#errorMessage").text("");
 		if(document.getElementById("action").value.match("add")) {
-			$('#listVideoContainer').jtable('addRecord', {
+			$('#listOnlineTestContainer').jtable('addRecord', {
 			    record: {
 			    	name:$("#name").val(),
+			    	instruction:$("#instruction").val(),
 			    	status:$("#status").val(),
 			    	action:'ADD',
+			    	second : $('#second').val(),
 			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
 			    	subjects:$("#subjects").val()
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listOnlineTestContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -270,20 +274,20 @@
 			});
 		}
 		if(document.getElementById("action").value.match("update")) {
-			$('#listVideoContainer').jtable('updateRecord', {
+			$('#listOnlineTestContainer').jtable('updateRecord', {
 			    record: {
-			    	VideoId:$("#VideoId").val(),
+			    	OnlineTestId:$("#onlineTestId").val(),
 			    	action:'update',
 			    	name:$("#name").val(),
+			    	second : $('#second').val(),
 			    	status:$("#status").val(),
+			    	instruction:$("#instruction").val(),
 			    	courses:$("#courses").val(),
-			    	isPrime:$("#isPrime").val(),
-			    	videoLocation:$("#videoLocation").val(),
 			    	subjects:$("#subjects").val()
 			    	
 			    },
 			    success: function() {
-					$('#listVideoContainer').jtable('reload');
+					$('#listOnlineTestContainer').jtable('reload');
 					$('#searchModal').closeModal();
 					$("#mes").hide();
 					blankUpdateForm();
@@ -296,24 +300,24 @@
 			});
 		}
 	}
-
 	
-	function loadVideoDetail(VideoId) {
+	function loadOnlineTestDetail(OnlineTestId) {
 		
 		$.ajax({
-			  url: "loadVideoDetails",
+			  url: "loadOnlineTestDetails",
 			  type: 'GET',
 			  dataType: 'json', 
-			  data : {videoId : VideoId},
+			  data : {onlineTestId : OnlineTestId},
 			  success: function(json){
-					$("#VideoId").val(json.VideoId);
+				  $("#action").val('update');
+					$('#searchModal').openModal();
+					$("#onlineTestId").val(json.OnlineTestId);
 					$("#name").val(json.name);
+					$('#second').val(json.second),
+					$("#instruction").val(json.instructions);
 					$("#subjects").val(json.subjectIds.split(","));
 					$("#courses").val(json.courseIds.split(","));
-					$('#videoLocation').val(json.videoLocation);
 					$('select').select2();
-					$("#action").val('update');
-					$('#searchModal').openModal();
 			  }
 		});
 		
@@ -327,11 +331,10 @@
         $("#action").val('add');
         $("#instruction").val('');
         $("#subjects").val('');
+        $('#second').val('');
         $("#courses").val('');
         $("#errorMessage").text("");
         $('select').select2();
-    	$('#videoLocation').val("");
 	}
-	
 </script>
 </html>

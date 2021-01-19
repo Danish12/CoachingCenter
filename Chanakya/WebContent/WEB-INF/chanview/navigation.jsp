@@ -9,7 +9,7 @@
           <li><a href="${pageContext.request.contextPath}/#trainers">Trainers</a></li>
           <li><a href="${pageContext.request.contextPath}/watch-videos">Videos</a></li>
           <li><a href="${pageContext.request.contextPath}/online-test">Online Test</a></li>
-          <c:if  test="${pageContext.request.userPrincipal.name != null}">
+          <c:if  test="${pageContext.request.userPrincipal.name != null and ROLE eq 'ROLE_SUPER_ADMIN'}">
 	          <li class="drop-down"><a href="">Admin</a>
 	            <ul>
 	              <li><a href="${pageContext.request.contextPath}/blogAdmin">Articles</a></li>

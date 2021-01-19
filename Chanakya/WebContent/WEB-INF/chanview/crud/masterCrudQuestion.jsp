@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="header.jsp"%>
+<%@ include file="../header.jsp"%>
 <link href="mainResources/css/font-awesome-4.5.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
 
 <link type="text/css" rel="stylesheet" href="mainResources/css/jquery-ui.min.css"/>
@@ -54,7 +54,7 @@
 	}
 </style>
 <body>
-	<%@ include file="navigation.jsp"%>
+	<%@ include file="../navigation.jsp"%>
 	
 	<main id="main" style="padding-top: 6%;">
 	    <br>
@@ -82,7 +82,7 @@
 		</div>
 	</main>
 <c:set var="excludeBootstrapNjquery" value="true" ></c:set>
-<%@ include file="footer.jsp"%>
+<%@ include file="../footer.jsp"%>
 </body>
 <script type="text/javascript">
 	

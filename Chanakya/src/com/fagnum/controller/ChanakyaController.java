@@ -1,10 +1,6 @@
 package com.fagnum.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -18,7 +14,6 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fagnum.services.util.MailThread;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.JSONValue;
@@ -43,6 +38,7 @@ import com.fagnum.services.service.EnquiryService;
 import com.fagnum.services.service.ImageService;
 import com.fagnum.services.service.SubjectService;
 import com.fagnum.services.util.Constants;
+import com.fagnum.services.util.MailThread;
 
 @Controller
 public class ChanakyaController extends BaseAppController{
@@ -76,6 +72,7 @@ public class ChanakyaController extends BaseAppController{
 		User currentUser = SpringUser.getCurrentUser();
 		if (currentUser != null) {
 			request.getSession().setAttribute("user", currentUser);
+			request.getSession().setAttribute("ROLE", currentUser.getUserType());
 		}
 		List<Images> images = imageService.findByImage("HOME_SLIDER");
 		request.setAttribute("images", images);
