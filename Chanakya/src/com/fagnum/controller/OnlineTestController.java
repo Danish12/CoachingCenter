@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fagnum.services.service.CourseService;
 import com.fagnum.services.service.OnlineTestService;
 import com.fagnum.services.service.SubjectService;
+import com.fagnum.services.util.UserUtil;
 
 @Controller
 public class OnlineTestController extends BaseAppController {
@@ -81,8 +82,11 @@ public class OnlineTestController extends BaseAppController {
 		if (null == course) {
 			return "errorPage";
 		}
+		
+		
+		boolean isPrime = UserUtil.isPrime(request, course);
 
-		request.setAttribute("onlineTests", onlineTestService.findByCourse(course.getCourseId(), "0", "10"));
+		request.setAttribute("onlineTests", onlineTestService.findByCourse(course.getCourseId(), "0", "100", isPrime));
 		request.setAttribute("course", course);
 
 		return "onlineTestDetails";
@@ -96,11 +100,13 @@ public class OnlineTestController extends BaseAppController {
 		if (null == course) {
 			return "errorPage";
 		}
+		
+		boolean isPrime = UserUtil.isPrime(request, course);
 
 		Subject subject = subjectService.findSubject(subjectName);
 
 		request.setAttribute("onlineTests",
-				onlineTestService.findByCourseAndSubject(course.getCourseId(), subject.getSubjectId(), "0", "10"));
+				onlineTestService.findByCourseAndSubject(course.getCourseId(), subject.getSubjectId(), "0", "100", isPrime));
 		request.setAttribute("course", course);
 
 		return "onlineTestDetails";
