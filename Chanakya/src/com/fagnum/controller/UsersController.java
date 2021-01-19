@@ -298,7 +298,7 @@ public class UsersController {
 	@RequestMapping("/users")
 	public String user(HttpServletRequest request) {
 		request.setAttribute("courses", courseService.getAllList(Course.class));
-		return "masterCrudUsers";
+		return "/crud/masterCrudUsers";
 	}
 
 	@RequestMapping(value="/listUser")

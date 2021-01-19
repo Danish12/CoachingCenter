@@ -35,11 +35,11 @@ public class ImageUploadController {
 	ImageService imageService = AppController.getImageService();
 
 	@RequestMapping("/images")
-	public String masterCrudCourse(HttpServletRequest request) {
+	public String masterCrudImages(HttpServletRequest request) {
 
 		List<Images> images = imageService.getList(Images.class, "0", "100");
 		request.setAttribute("images", images);
-		return "masterCrudImages";
+		return "/crud/masterCrudImages";
 	}
 
 	@RequestMapping(value = "/listImages")
@@ -88,7 +88,7 @@ public class ImageUploadController {
 			jsonObject.put("Result", "Error");
 			jsonObject.put("Message", "Unable to add Course please try again.");
 		}
-		return "masterCrudImages";
+		return "/crud/masterCrudImages";
 
 	}
 
@@ -106,7 +106,7 @@ public class ImageUploadController {
 			jsonObject.put("Result", "Error");
 			jsonObject.put("Message", "Unable to update Course please try again.");
 		}
-		return "masterCrudImages";
+		return "/crud/masterCrudImages";
 
 	}
 

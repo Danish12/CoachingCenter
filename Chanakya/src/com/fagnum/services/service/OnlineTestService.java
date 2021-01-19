@@ -9,4 +9,7 @@ public interface OnlineTestService extends AbstractService<OnlineTest, String> {
 
     List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize);
     List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize);
+	List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize, boolean isPrime);
+	List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize,
+			boolean isPrime);
 }

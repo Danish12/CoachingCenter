@@ -25,7 +25,7 @@ public class EnquiryController {
 	@RequestMapping("/enquiry")
 	public String masterCrudSubject(HttpServletRequest request) {
 
-		return "masterCrudEnquiry";
+		return "/crud/masterCrudEnquiry";
 	}
 
 	@RequestMapping(value = "/listEnquiry")

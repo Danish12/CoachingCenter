@@ -22,9 +22,19 @@ public class OnlineTestServiceImpl extends AbstractServiceImpl<OnlineTest, Strin
 	public List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize) {
 		return onlineTestDao.findByCourse(courseId, startIndex, pageSize);
 	}
+	
+	@Override
+	public List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize, boolean isPrime) {
+		return onlineTestDao.findByCourse(courseId, startIndex, pageSize, isPrime);
+	}
 
 	@Override
 	public List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize) {
 		return onlineTestDao.findByCourseAndSubject(courseId, subjectId, startIndex, pageSize);
+	}
+	
+	@Override
+	public List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize, boolean isPrime) {
+	  return onlineTestDao.findByCourseAndSubject(courseId, subjectId, startIndex, pageSize, isPrime);
 	}
 }

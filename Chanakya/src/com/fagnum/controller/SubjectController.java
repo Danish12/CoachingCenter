@@ -40,7 +40,7 @@ public class SubjectController {
 
 		List<Subject> subjects = subjectService.getList(Subject.class, "0", "100");
 		request.setAttribute("subjects", subjects);
-		return "masterCrudSubject";
+		return "/crud/masterCrudSubject";
 	}
 	
 	@RequestMapping(value = "/listSubject")

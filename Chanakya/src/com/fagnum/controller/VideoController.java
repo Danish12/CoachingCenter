@@ -56,7 +56,7 @@ public class VideoController {
 		request.setAttribute("courses", courseService.getAllList(Course.class));
 		request.setAttribute("subjects", subjectService.getAllList(Subject.class));
 
-		return "masterCrudVideo";
+		return "/crud/masterCrudVideo";
 	}
 
 	@RequestMapping("/videos2")

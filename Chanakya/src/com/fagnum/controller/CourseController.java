@@ -84,7 +84,7 @@ public class CourseController extends BaseAppController{
 
 		List<Subject> subjects = subjectService.getList(Subject.class, "0", "100");
 		request.setAttribute("subjects", subjects);
-		return "masterCrudCourse";
+		return "/crud/masterCrudCourse";
 	}
 
 	@RequestMapping(value = "/listCourse")

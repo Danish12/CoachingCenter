@@ -39,7 +39,7 @@ public class QuestionController extends BaseAppController {
 		request.setAttribute("onlineTestId", onlineTestId);
 		OnlineTest onlineTest = onlineTestService.read(OnlineTest.class, onlineTestId);
 		request.setAttribute("onlineTest", onlineTest);
-		return "masterCrudQuestion";
+		return "/crud/masterCrudQuestion";
 	}
 
 	@RequestMapping(value = "/saveQuestion" , method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")

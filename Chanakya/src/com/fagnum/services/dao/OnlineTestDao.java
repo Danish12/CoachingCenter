@@ -10,4 +10,9 @@ public interface OnlineTestDao extends AbstractDao<OnlineTest, String> {
     List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize);
 
     List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize);
+
+	List<OnlineTest> findByCourse(String courseId, String startIndex, String pageSize, boolean isPrime);
+
+	List<OnlineTest> findByCourseAndSubject(String courseId, String subjectId, String startIndex, String pageSize,
+			boolean isPrime);
 }
